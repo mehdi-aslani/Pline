@@ -37,7 +37,6 @@ const SipUserGroups = () => {
             search: true,
             sort: true,
         },
-    
         {
             label: "Description",
             id: "desc",

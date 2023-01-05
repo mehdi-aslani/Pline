@@ -1,7 +1,8 @@
 import React, { useState, useEffect, FormEventHandler } from "react";
 import { Row, Col, Form, Button } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
-import CInput from "../../form/CInput";
+import CheckboxC from "../../reuseables/CheckboxC";
+import TextInputC from "../../reuseables/TextInputC";
 import PlineTools, { TypeAlert } from "../../services/PlineTools";
 
 const SipUsersForm = () => {
@@ -88,6 +89,21 @@ const SipUsersForm = () => {
         }
       });
   };
+  const handleChange = (e: any) => {
+    const { name, value } = e.target;
+    setState((state) => ({
+      ...state,
+      [name]: value,
+    }));
+  };
+  const handleChecked = (e: any) => {
+    const value = e.target.checked;
+    const name = e.target.name;
+    setState((state) => ({
+      ...state,
+      [name]: value,
+    }));
+  };
   useEffect(() => {
     getData();
   }, []);
@@ -100,136 +116,85 @@ const SipUsersForm = () => {
         <hr />
         <Form onSubmit={saveData}>
           <Row>
-            <Col md={6}>
-              <Form.Group className="mb-3" controlId="enable">
-                <Form.Check
-                  type="checkbox"
-                  label="Enable"
-                  onChange={(e) => {
-                    setState({ ...state, enable: e.target.checked });
-                  }}
-                  checked={state.enable}
-                />
-              </Form.Group>
-            </Col>
+            <CheckboxC
+              type="checkbox"
+              label="Enable"
+              name="enable"
+              checked={state.enable}
+              onChange={handleChecked}
+            />
           </Row>
           <Row>
-            <Col md={6}>
-              <Form.Group className="mb-3">
-                <Form.Label>Uid</Form.Label>
-                <Form.Control
-                  type="text"
-                  name="uid"
-                  defaultValue={state.uid}
-                  onChange={(e) => {
-                    setState({ ...state, uid: e.target.value });
-                  }}
-                  value={state.uid}
-                />
-              </Form.Group>
-            </Col>
-            <Col md={6}>
-              <Form.Group className="mb-3">
-                <Form.Label>Parallel</Form.Label>
-                <Form.Control
-                  type="text"
-                  name="parallel"
-                  defaultValue={state.uid}
-                  onChange={(e) => {
-                    setState({ ...state, parallel: e.target.value });
-                  }}
-                  value={state.parallel}
-                />
-              </Form.Group>
-            </Col>
+            <TextInputC
+              name="uid"
+              label="Uid"
+              type="text"
+              require={true}
+              value={state.uid}
+              onChange={handleChange}
+            />
+            <TextInputC
+              label="Parallel"
+              name="parallel"
+              type="text"
+              require={true}
+              value={state.parallel}
+              onChange={handleChange}
+            />
           </Row>
           <Row>
-            <Col md={6}>
-              <Form.Group className="mb-3">
-                <Form.Label>Password</Form.Label>
-                <Form.Control
-                  type="text"
-                  name="password"
-                  defaultValue={state.uid}
-                  onChange={(e) => {
-                    setState({ ...state, password: e.target.value });
-                  }}
-                  value={state.password}
-                />
-              </Form.Group>
-            </Col>
-            <Col md={6}>
-              <Form.Group className="mb-3">
-                <Form.Label>Acl</Form.Label>
-                <Form.Control
-                  type="text"
-                  name="uid"
-                  defaultValue={state.acl}
-                  onChange={(e) => {
-                    setState({ ...state, acl: e.target.value });
-                  }}
-                  value={state.acl}
-                />
-              </Form.Group>
-            </Col>
+            <TextInputC
+              name="password"
+              label="Password"
+              type="text"
+              require={true}
+              value={state.password}
+              onChange={handleChange}
+            />
+            <TextInputC
+              name="acl"
+              label="Acl"
+              type="text"
+              require={true}
+              value={state.acl}
+              onChange={handleChange}
+            />
           </Row>
           <Row>
-            <Col md={6}>
-              <Form.Group className="mb-3">
-                <Form.Label>Effective CallerId Name</Form.Label>
-                <Form.Control
-                  type="text"
-                  name="uid"
-                  defaultValue={state.effectiveCallerIdName}
-                  onChange={(e) => {
-                    setState({ ...state, effectiveCallerIdName: e.target.value });
-                  }}
-                  value={state.effectiveCallerIdName}
-                />
-              </Form.Group>
-            </Col>
-            <Col md={6}>   <Form.Group className="mb-3">
-              <Form.Label>Effective CallerId Number</Form.Label>
-              <Form.Control
-                type="text"
-                name="uid"
-                defaultValue={state.effectiveCallerIdNumber}
-                onChange={(e) => {
-                  setState({ ...state, effectiveCallerIdNumber: e.target.value });
-                }}
-                value={state.effectiveCallerIdNumber}
-              />
-            </Form.Group></Col>
+            <TextInputC
+              name="effectiveCallerIdName"
+              label="Effective CallerId Name"
+              type="text"
+              require={true}
+              value={state.effectiveCallerIdName}
+              onChange={handleChange}
+            />
+            <TextInputC
+              name="effectiveCallerIdNumber"
+              label="Effective CallerId Number"
+              type="text"
+              require={true}
+              value={state.effectiveCallerIdNumber}
+              onChange={handleChange}
+            />
           </Row>
           <Row>
-            <Col md={6}>
-              <Form.Group className="mb-3">
-                <Form.Label>Outbound CallerId Name</Form.Label>
-                <Form.Control
-                  type="text"
-                  name="uid"
-                  defaultValue={state.outboundCallerIdName}
-                  onChange={(e) => {
-                    setState({ ...state, outboundCallerIdName: e.target.value });
-                  }}
-                  value={state.outboundCallerIdName}
-                />
-              </Form.Group>
-            </Col>
-            <Col md={6}>
-              <Form.Group className="mb-3">
-                <Form.Label>Outbound CallerId Number</Form.Label>
-                <Form.Control
-                  type="text"
-                  name="uid"
-                  defaultValue={state.outboundCallerIdNumber}
-                  onChange={(e) => {
-                    setState({ ...state, outboundCallerIdNumber: e.target.value });
-                  }}
-                  value={state.outboundCallerIdNumber}
-                />
-              </Form.Group>
-            </Col>
+          <TextInputC
+              name="outboundCallerIdName"
+              label="Outbound CallerId Name"
+              type="text"
+              require={true}
+              value={state.outboundCallerIdName}
+              onChange={handleChange}
+            />
+             <TextInputC
+              name="outboundCallerIdNumber"
+              label="Outbound CallerId Number"
+              type="text"
+              require={true}
+              value={state.outboundCallerIdNumber}
+              onChange={handleChange}
+            />
           </Row>
           <Row>
             <Col md={6}>

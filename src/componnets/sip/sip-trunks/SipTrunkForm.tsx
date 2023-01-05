@@ -2,7 +2,6 @@ import React, { useState, useEffect, FormEventHandler } from "react";
 import { Row, Col, Form, Button } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 import CheckboxC from "../../reuseables/CheckboxC";
-import Checkbox from "../../reuseables/CheckboxC";
 import TextareaC from "../../reuseables/TextareaC";
 import TextInputC from "../../reuseables/TextInputC";
 import PlineTools, { TypeAlert } from "../../services/PlineTools";
@@ -16,7 +15,6 @@ const SipTrunkForm = () => {
                 setOptions(result.data);
             })
             .catch((error) => {
-
                 PlineTools.errorDialogMessage("Failed To Get Profiles");
             })
             .finally(() => {
@@ -46,7 +44,7 @@ const SipTrunkForm = () => {
         callerIdNumber: "",
         maxCalls: 0,
         proxy: "",
-        enable: true,
+        enable: false,
         registerMode: "NoRegister",
         description: ""
 
@@ -96,6 +94,15 @@ const SipTrunkForm = () => {
             [name]: value,
         }));
     };
+    const handleChecked = (e: any) => {
+        const value = e.target.checked;
+        const name = e.target.name;
+        setState((state) => ({
+            ...state,
+            [name]: value,
+        }));
+
+    };
     useEffect(() => {
         getData();
         load();
@@ -110,8 +117,9 @@ const SipTrunkForm = () => {
 
                 <Form onSubmit={saveData}>
                     <Row>
-                        <CheckboxC name="enable" label="Enable" checked={state.enable} onChange={handleChange} />
+                        <CheckboxC name="enable" label="Enable" checked={state.enable} onChange={handleChecked} />
                     </Row>
+
                     <Row>
                         <TextInputC
                             name="name"
@@ -162,7 +170,7 @@ const SipTrunkForm = () => {
                             onChange={handleChange}
                         />
                         <TextInputC
-                            name="fromDomian"
+                            name="fromDomain"
                             label="From Domain"
                             require={true}
                             value={state.fromDomain}
@@ -192,10 +200,8 @@ const SipTrunkForm = () => {
                                 <select
                                     className={"form-select"}
                                     onChange={(e) => {
-                                        let value =parseInt( e.target.value);
-                                        let test=value.toString();
-                                        setState(state => (state.sipProfile.id = value, state))
-                                        console.log(value,test);
+                                        let test = parseInt(e.target.value);
+                                        setState(state => (state.sipProfile.id = test, state))
                                     }}>
                                     <option value={0}>Select Profile ...</option>
                                     {options.map((opt: any) => (
@@ -214,6 +220,15 @@ const SipTrunkForm = () => {
                             onChange={handleChange}
                         />
 
+                    </Row>
+                    <Row>
+                        <TextInputC
+                            name="acl"
+                            label="Acl"
+                            require={true}
+                            value={state.acl}
+                            onChange={handleChange}
+                        />
                     </Row>
                     <Row>
                         <TextareaC
