@@ -2,6 +2,7 @@ import React, { useState, useEffect, FormEventHandler } from "react";
 import { Row, Col, Form, Button } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 import CheckboxC from "../../reuseables/CheckboxC";
+import TextareaC from "../../reuseables/TextareaC";
 import TextInputC from "../../reuseables/TextInputC";
 import PlineTools, { TypeAlert } from "../../services/PlineTools";
 
@@ -18,8 +19,12 @@ const SipUsersForm = () => {
     effectiveCallerIdName: "",
     outboundCallerIdNumber: "",
     outboundCallerIdName: "",
-    sipProfile: "",
-    sipUserGroup: "",
+    sipProfile: {
+      id: 0
+    },
+    sipUserGroup: {
+      id: 0
+    },
     enable: true
   });
   const navigate = useNavigate();
@@ -29,14 +34,12 @@ const SipUsersForm = () => {
   });
   const saveData = (e: any) => {
     e.preventDefault();
-
     let url = "/sip-users";
     if (state.id == null) {
       url += "/create";
     } else {
       url += "/update";
     }
-
     PlineTools.postRequest(url, state)
       .then((result) => {
         if (result.data.hasError) {
@@ -63,10 +66,9 @@ const SipUsersForm = () => {
     }
   };
   const load = () => {
-    PlineTools.getRequest("/sip-users/get-sip-user-options")
+    PlineTools.getRequest("/sip-profiles/get-all")
       .then((result) => {
-        console.log(result.data);
-        setOptions(result.data);
+        setOptions({ ...options, profileOptions: result.data });
       })
       .catch((error) => {
         if (error.response.status === 422) {
@@ -89,23 +91,10 @@ const SipUsersForm = () => {
         }
       });
   };
-  const handleChange = (e: any) => {
-    const { name, value } = e.target;
-    setState((state) => ({
-      ...state,
-      [name]: value,
-    }));
-  };
-  const handleChecked = (e: any) => {
-    const value = e.target.checked;
-    const name = e.target.name;
-    setState((state) => ({
-      ...state,
-      [name]: value,
-    }));
-  };
+
   useEffect(() => {
     getData();
+    load();
   }, []);
 
   return (
@@ -121,7 +110,7 @@ const SipUsersForm = () => {
               label="Enable"
               name="enable"
               checked={state.enable}
-              onChange={handleChecked}
+              setState={setState}
             />
           </Row>
           <Row>
@@ -131,7 +120,7 @@ const SipUsersForm = () => {
               type="text"
               require={true}
               value={state.uid}
-              onChange={handleChange}
+              setState={setState}
             />
             <TextInputC
               label="Parallel"
@@ -139,7 +128,7 @@ const SipUsersForm = () => {
               type="text"
               require={true}
               value={state.parallel}
-              onChange={handleChange}
+              setState={setState}
             />
           </Row>
           <Row>
@@ -149,16 +138,27 @@ const SipUsersForm = () => {
               type="text"
               require={true}
               value={state.password}
-              onChange={handleChange}
+              setState={setState}
             />
-            <TextInputC
-              name="acl"
-              label="Acl"
-              type="text"
-              require={true}
-              value={state.acl}
-              onChange={handleChange}
-            />
+            <Col md={6}>
+              <Form.Group className="mb-3" controlId="sipProfiles">
+                <Form.Label>SIP Profiles</Form.Label>
+
+                <select
+                  className={"form-select"}
+                  value={state.sipProfile.id}
+                  onChange={(e) => {
+                    setState({ ...state, sipProfile: { id: parseInt(e.target.value) } })
+                  }}>
+                  <option value={0}>Select Profile ...</option>
+                  {options.profileOptions.map((opt: any) => (
+                    <option key={opt.id} value={opt.id}>
+                      {opt.name}
+                    </option>
+                  ))}
+                </select>
+              </Form.Group>
+            </Col>
           </Row>
           <Row>
             <TextInputC
@@ -167,7 +167,7 @@ const SipUsersForm = () => {
               type="text"
               require={true}
               value={state.effectiveCallerIdName}
-              onChange={handleChange}
+              setState={setState}
             />
             <TextInputC
               name="effectiveCallerIdNumber"
@@ -175,61 +175,37 @@ const SipUsersForm = () => {
               type="text"
               require={true}
               value={state.effectiveCallerIdNumber}
-              onChange={handleChange}
+              setState={setState}
             />
           </Row>
           <Row>
-          <TextInputC
+            <TextInputC
               name="outboundCallerIdName"
               label="Outbound CallerId Name"
               type="text"
               require={true}
               value={state.outboundCallerIdName}
-              onChange={handleChange}
+              setState={setState}
             />
-             <TextInputC
+            <TextInputC
               name="outboundCallerIdNumber"
               label="Outbound CallerId Number"
               type="text"
               require={true}
               value={state.outboundCallerIdNumber}
-              onChange={handleChange}
+              setState={setState}
             />
           </Row>
           <Row>
-            <Col md={6}>
-              <Form.Group className="mb-3" controlId="sipProfiles">
-                <Form.Label>SIP Profiles</Form.Label>
 
-                <select
-                  className={"form-select"}
-                  value={state.sipProfile}
-
-                  onChange={(e) => {
-                    let tmp = { ...state };
-                    tmp.sipProfile = e.target.value;
-                    setState(tmp);
-                  }}>
-                  <option value={0}>Select Profile ...</option>
-                  {options.profileOptions.map((opt: any) => (
-                    <option key={opt.value} value={opt.value}>
-                      {opt.label}
-                    </option>
-                  ))}
-                </select>
-              </Form.Group>
-            </Col>
             <Col md={6}>
               <Form.Group className="mb-3" controlId="sipProfiles">
                 <Form.Label>SIP User Groups</Form.Label>
-
                 <select
                   className={"form-select"}
-                  value={state.sipUserGroup}
+                  value={state.sipUserGroup.id}
                   onChange={(e) => {
-                    let tmp = { ...state };
-                    tmp.sipUserGroup = e.target.value;
-                    setState(tmp);
+                    setState({ ...state, sipUserGroup: { id: parseInt(e.target.value) } });
                   }}>
                   <option value={0}>Select User Group ...</option>
                   {options.sipGroupOptions.map((opt: any) => (
@@ -240,6 +216,14 @@ const SipUsersForm = () => {
                 </select>
               </Form.Group>
             </Col>
+          </Row>
+          <Row>
+            <TextareaC
+              name="acl"
+              label="Acl"
+              value={state.acl}
+              setState={setState}
+            />
           </Row>
           <Button variant="primary" type="submit">
             Save

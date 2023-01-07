@@ -11,7 +11,6 @@ const SipTrunkForm = () => {
     const load = () => {
         PlineTools.getRequest("/sip-profiles/get-all")
             .then((result) => {
-                console.log(result);
                 setOptions(result.data);
             })
             .catch((error) => {
@@ -20,7 +19,7 @@ const SipTrunkForm = () => {
             .finally(() => {
                 let id = params.id;
                 if (id !== undefined) {
-                    const url = "/sip-trunks/" + id;
+                    const url = "/sip-trunks/get/" + id;
                     PlineTools.getRequest(url)
                         .then((result) => {
                             setState(result.data);
@@ -31,6 +30,15 @@ const SipTrunkForm = () => {
                 }
             });
     };
+    const [isrequire ,setRequire] =useState({
+        proxy:{
+            req:false,
+            disabled:false
+        },
+        username:false,
+        password:false,
+
+    });
     const [state, setState] = useState({
         id: null,
         name: "",
@@ -45,7 +53,7 @@ const SipTrunkForm = () => {
         maxCalls: 0,
         proxy: "",
         enable: false,
-        registerMode: "NoRegister",
+        registerMode: "",
         description: ""
 
     });
@@ -53,19 +61,18 @@ const SipTrunkForm = () => {
     const [options, setOptions] = useState([]);
     const saveData = (e: any) => {
         e.preventDefault();
-
         let url = "/sip-trunks";
         if (state.id == null) {
             url += "/create";
         } else {
             url += "/update";
         }
-
         PlineTools.postRequest(url, state)
             .then((result) => {
                 if (result.data.hasError) {
                     PlineTools.showAlert(result.data.messages, TypeAlert.Danger);
                 } else {
+                    console.log(state);
                     navigate("/sip-trunks/index");
                 }
             })
@@ -74,7 +81,6 @@ const SipTrunkForm = () => {
                 console.log(state);
             });
     };
-    PlineTools.appAlert
     const getData = () => {
         const id = params.id;
         if (id != undefined) {
@@ -87,37 +93,19 @@ const SipTrunkForm = () => {
                 });
         }
     };
-    const handleChange = (e: any) => {
-        const { name, value } = e.target;
-        setState((state) => ({
-            ...state,
-            [name]: value,
-        }));
-    };
-    const handleChecked = (e: any) => {
-        const value = e.target.checked;
-        const name = e.target.name;
-        setState((state) => ({
-            ...state,
-            [name]: value,
-        }));
 
-    };
     useEffect(() => {
         getData();
         load();
     }, []);
-
     return (
-
         <Row>
             <Col md={{ span: 8, offset: 2 }}>
                 <h5>SIP Trunks</h5>
                 <hr />
-
                 <Form onSubmit={saveData}>
                     <Row>
-                        <CheckboxC name="enable" label="Enable" checked={state.enable} onChange={handleChecked} />
+                        <CheckboxC name="enable" label="Enable" checked={state.enable} setState={setState} />
                     </Row>
 
                     <Row>
@@ -126,7 +114,7 @@ const SipTrunkForm = () => {
                             label="Name"
                             require={true}
                             value={state.name}
-                            onChange={handleChange}
+                            setState={setState}
                         />
                         <Col md={6}>
                             <Form.Group className="mb-3" controlId="maxCalls">
@@ -147,18 +135,18 @@ const SipTrunkForm = () => {
                         <TextInputC
                             name="username"
                             label="Username"
-                            require={true}
+                            require={isrequire.username}
                             value={state.username}
-                            onChange={handleChange}
+                            setState={setState}
                         />
 
                         <TextInputC
                             name="password"
                             type="password"
                             label="Password"
-                            require={true}
+                            require={isrequire.password}
                             value={state.password}
-                            onChange={handleChange}
+                            setState={setState}
                         />
                     </Row>
                     <Row>
@@ -167,14 +155,14 @@ const SipTrunkForm = () => {
                             label="From User"
                             require={true}
                             value={state.fromUser}
-                            onChange={handleChange}
+                            setState={setState}
                         />
                         <TextInputC
                             name="fromDomain"
                             label="From Domain"
                             require={true}
                             value={state.fromDomain}
-                            onChange={handleChange}
+                            setState={setState}
                         />
                     </Row>
                     <Row>
@@ -183,14 +171,14 @@ const SipTrunkForm = () => {
                             label="Calller ID Name"
                             require={true}
                             value={state.callerIdName}
-                            onChange={handleChange}
+                            setState={setState}
                         />
                         <TextInputC
                             name="callerIdNumber"
                             label="Caller ID Number"
                             require={true}
                             value={state.callerIdNumber}
-                            onChange={handleChange}
+                            setState={setState}
                         />
                     </Row>
                     <Row>
@@ -199,9 +187,9 @@ const SipTrunkForm = () => {
                                 <Form.Label>SIP Profile</Form.Label>
                                 <select
                                     className={"form-select"}
+                                    value={state.sipProfile.id}
                                     onChange={(e) => {
-                                        let test = parseInt(e.target.value);
-                                        setState(state => (state.sipProfile.id = test, state))
+                                        setState({ ...state, sipProfile: { id: parseInt(e.target.value) } });
                                     }}>
                                     <option value={0}>Select Profile ...</option>
                                     {options.map((opt: any) => (
@@ -215,27 +203,63 @@ const SipTrunkForm = () => {
                         <TextInputC
                             name="proxy"
                             label="Proxy"
-                            require={true}
+                            disable={isrequire.proxy.disabled}
+                            require={isrequire.proxy.req}
                             value={state.proxy}
-                            onChange={handleChange}
+                            setState={setState}
                         />
 
                     </Row>
                     <Row>
-                        <TextInputC
+                        <Col md={6}>
+                            <Form.Group className="mb-3" controlId="registerMode">
+                                <Form.Label>Register Mode</Form.Label>
+                                <select
+                                    className={"form-select"}
+                                   
+                                    onChange={(e) => {
+                                        let tmp=e.target.value;
+                                        setState({...state,registerMode:tmp});
+                                        console.log(state);
+                                        // if(state.registerMode ==="NoRegister")
+                                        // {
+                                        //     console.log(state.registerMode);
+                                        //     setRequire({...isrequire,password:false,username:false,proxy:{req:true,disabled:false}});
+                                        // }else{
+                                        //     setRequire({...isrequire,password:true,username:true ,proxy:{req:false,disabled:true}});
+                                        // }
+                                        // switch (state.registerMode) {
+                                        //     case "NoRegister":
+                                        //     setRequire({...isrequire,password:false,username:false});
+                                        //     break;
+                                        //     case "Register" || "Registrable":
+                                        //     
+                                        //     break;
+                                           
+                                        // }
+                                    }}
+                                    value={state.registerMode}>
+                                    <option >Select Register Type</option>
+                                    <option value={"NoRegister"}>NoRegister</option>
+                                    <option value={"Registrable"}>Registrable</option>
+                                    <option value={"Register"}>Register</option>
+                                </select>
+                            </Form.Group>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <TextareaC
                             name="acl"
                             label="Acl"
                             require={true}
                             value={state.acl}
-                            onChange={handleChange}
+                            setState={setState}
                         />
-                    </Row>
-                    <Row>
                         <TextareaC
                             name="description"
                             label="Description"
-                            defaultValue={state.description}
-                            onChange={handleChange}
+                            value={state.description}
+                            setState={setState}
                         />
                     </Row>
                     <Button variant="primary" type="submit">

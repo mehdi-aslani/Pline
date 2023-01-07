@@ -1,7 +1,6 @@
 import React, { useState, useEffect, FormEventHandler } from "react";
 import { Row, Col, Form, Button } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
-import CInput from "../../form/CInput";
 import TextareaC from "../../reuseables/TextareaC";
 import TextInputC from "../../reuseables/TextInputC";
 import PlineTools, { TypeAlert } from "../../services/PlineTools";
@@ -49,13 +48,6 @@ const SipUserGroupsForm = () => {
         });
     }
   };
-  const handleChange = (e: any) => {
-    const { name, value } = e.target;
-    setState((state) => ({
-      ...state,
-      [name]: value,
-    }));
-  };
   useEffect(() => {
     getData();
   }, []);
@@ -72,7 +64,7 @@ const SipUserGroupsForm = () => {
            name="name"
            label="Name"
            value={state.name}
-           onChange={handleChange}
+           setState={setState}
           />
         </Row>
         <Row>
@@ -80,7 +72,7 @@ const SipUserGroupsForm = () => {
            name="description"
            label="Description"
            value={state.description}
-           onChange={handleChange}
+           setState={setState}
           />
         </Row>
         <Button variant="primary" type="submit">

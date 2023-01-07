@@ -4,6 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import PlineTools, { TypeAlert } from "../../services/PlineTools";
 import TextareaC from "../../reuseables/TextareaC";
 import TextInputC from "../../reuseables/TextInputC";
+import CheckboxC from "../../reuseables/CheckboxC";
 
 
 const SipProfileForm = () => {
@@ -11,6 +12,7 @@ const SipProfileForm = () => {
   const [state, setState] = useState({
     id: null,
     name: "",
+    enable:true,
     description: "",
   });
   const navigate = useNavigate();
@@ -48,18 +50,11 @@ const SipProfileForm = () => {
         });
     }
   };
-
   useEffect(() => {
     getData();
   }, []);
 
-  const handleChange = (e: any) => {
-    const { name, value } = e.target;
-    setState((state) => ({
-      ...state,
-      [name]: value,
-    }));
-  };
+ 
   return (
     <>
       <Row>
@@ -68,12 +63,20 @@ const SipProfileForm = () => {
           <hr />
           <Form onSubmit={saveData}>
             <Row>
-              <TextInputC
-                name="name"
-                label="Name" require={true} defaultValue={state.name} onChange={handleChange} />
+              <CheckboxC 
+                label="Enable"
+                name="enable"
+                checked={state.enable}
+                setState={setState}
+              />
             </Row>
             <Row>
-              <TextareaC name="description" label="Description" defaultValue={state.description} onChange={handleChange} />
+              <TextInputC
+                name="name"
+                label="Name" require={true} value={state.name} setState={setState} />
+            </Row>
+            <Row>
+              <TextareaC name="description" label="Description" value={state.description} setState={setState} />
             </Row>
             <Button variant="primary" type="submit">
               Save
