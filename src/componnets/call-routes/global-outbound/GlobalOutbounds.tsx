@@ -4,8 +4,6 @@ import { PencilSquare, Trash, UiChecks } from "react-bootstrap-icons";
 import { useNavigate } from "react-router-dom";
 import GridView, { IColumns, IGridViewState } from "../../grid-view/GridView";
 import PlineTools, { TypeAlert } from "../../services/PlineTools";
-
-
 const GlobalOutbounds = () => {
     const [state, setState] = useState<IGridViewState>({
         content: [],
@@ -23,7 +21,6 @@ const GlobalOutbounds = () => {
     const [searchParams, setSearchParams] = useState<any>();
     const [sortParams, setSortParams] = useState<string>();
     const navigate = useNavigate();
-
     const pageSize = 10;
     const columns: IColumns[] = [
         {
@@ -42,7 +39,6 @@ const GlobalOutbounds = () => {
             label: "Description",
             id: "desc",
         },
-
         {
             label: "Edit",
             id: "id",
@@ -84,7 +80,7 @@ const GlobalOutbounds = () => {
         if (sortParams !== undefined) {
             sort = "sort=" + sortParams;
         }
-
+   
         PlineTools.getRequest(
             `/sip-user-groups/index?page=${page}&size=${size}&${searchUrl}&${sort}`)
             .then((data) => {

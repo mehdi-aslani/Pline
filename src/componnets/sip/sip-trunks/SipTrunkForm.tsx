@@ -9,6 +9,12 @@ import PlineTools, { TypeAlert } from "../../services/PlineTools";
 const SipTrunkForm = () => {
     const params = useParams();
     const load = () => {
+        if (state.registerMode === "Register") {
+            setRequire({ ...isrequire, password: true, username: true, proxy: { req: false, disabled: true }, });
+        }
+        else {
+            setRequire({ ...isrequire, password: true, username: true, proxy: { req: false, disabled: true }, });
+        }
         PlineTools.getRequest("/sip-profiles/get-all")
             .then((result) => {
                 setOptions(result.data);
@@ -30,13 +36,13 @@ const SipTrunkForm = () => {
                 }
             });
     };
-    const [isrequire ,setRequire] =useState({
-        proxy:{
-            req:false,
-            disabled:false
+    const [isrequire, setRequire] = useState({
+        proxy: {
+            req: false,
+            disabled: false
         },
-        username:false,
-        password:false,
+        username: false,
+        password: false,
 
     });
     const [state, setState] = useState({
@@ -53,7 +59,7 @@ const SipTrunkForm = () => {
         maxCalls: 0,
         proxy: "",
         enable: false,
-        registerMode: "",
+        registerMode: '',
         description: ""
 
     });
@@ -81,21 +87,7 @@ const SipTrunkForm = () => {
                 console.log(state);
             });
     };
-    const getData = () => {
-        const id = params.id;
-        if (id != undefined) {
-            PlineTools.getRequest("/sip-trunks/get/" + id)
-                .then((result) => {
-                    setState(result.data);
-                })
-                .catch(() => {
-                    PlineTools.errorDialogMessage("An error occurred while executing your request. Contact the system administrator");
-                });
-        }
-    };
-
     useEffect(() => {
-        getData();
         load();
     }, []);
     return (
@@ -116,20 +108,13 @@ const SipTrunkForm = () => {
                             value={state.name}
                             setState={setState}
                         />
-                        <Col md={6}>
-                            <Form.Group className="mb-3" controlId="maxCalls">
-                                <Form.Label>Max Calls</Form.Label>
-                                <Form.Control
-                                    type="number"
-                                    required
-                                    onChange={(e) => {
-                                        setState({ ...state, maxCalls: parseInt(e.target.value) });
-                                    }}
-                                    value={state.maxCalls}
-                                />
-                            </Form.Group>
-                        </Col>
-
+                        <TextInputC
+                            type="number"
+                            name="maxCalls"
+                            label="Max Call"
+                            value={state.maxCalls}
+                            setState={setState}
+                        />
                     </Row>
                     <Row>
                         <TextInputC
@@ -200,52 +185,41 @@ const SipTrunkForm = () => {
                                 </select>
                             </Form.Group>
                         </Col>
-                        <TextInputC
-                            name="proxy"
-                            label="Proxy"
-                            disable={isrequire.proxy.disabled}
-                            require={isrequire.proxy.req}
-                            value={state.proxy}
-                            setState={setState}
-                        />
 
-                    </Row>
-                    <Row>
                         <Col md={6}>
                             <Form.Group className="mb-3" controlId="registerMode">
                                 <Form.Label>Register Mode</Form.Label>
                                 <select
+                                    value={state.registerMode}
                                     className={"form-select"}
-                                   
                                     onChange={(e) => {
-                                        let tmp=e.target.value;
-                                        setState({...state,registerMode:tmp});
-                                        console.log(state);
-                                        // if(state.registerMode ==="NoRegister")
-                                        // {
-                                        //     console.log(state.registerMode);
-                                        //     setRequire({...isrequire,password:false,username:false,proxy:{req:true,disabled:false}});
-                                        // }else{
-                                        //     setRequire({...isrequire,password:true,username:true ,proxy:{req:false,disabled:true}});
-                                        // }
-                                        // switch (state.registerMode) {
-                                        //     case "NoRegister":
-                                        //     setRequire({...isrequire,password:false,username:false});
-                                        //     break;
-                                        //     case "Register" || "Registrable":
-                                        //     
-                                        //     break;
-                                           
-                                        // }
+                                        let tmp = e.target.value;
+                                        setState({ ...state, registerMode: tmp });
+                                        if (tmp === "NoRegister" || tmp === "") {
+                                            setRequire({ ...isrequire, password: false, username: false, proxy: { req: true, disabled: false } });
+                                        } else {
+                                            setRequire({ ...isrequire, password: true, username: true, proxy: { req: false, disabled: true } });
+                                        }
                                     }}
-                                    value={state.registerMode}>
-                                    <option >Select Register Type</option>
+                                >
+                                    <option value={""}>Select Register Type</option>
                                     <option value={"NoRegister"}>NoRegister</option>
                                     <option value={"Registrable"}>Registrable</option>
                                     <option value={"Register"}>Register</option>
                                 </select>
                             </Form.Group>
                         </Col>
+                    </Row>
+                    <Row>
+
+                        <TextInputC
+                            name="proxy"
+                            label="Proxy"
+                            disabled={isrequire.proxy.disabled}
+                            require={isrequire.proxy.req}
+                            value={state.proxy}
+                            setState={setState}
+                        />
                     </Row>
                     <Row>
                         <TextareaC

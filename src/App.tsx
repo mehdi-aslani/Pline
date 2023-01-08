@@ -8,7 +8,7 @@ import Home from "./componnets/home/Home";
 import Login from "./componnets/login/Login";
 import NotFound from "./componnets/errors/NotFound";
 import Footer from "./componnets/layout/Footer";
-import { Alert, Button, Container, Modal } from "react-bootstrap";
+import { Alert, Button, Modal } from "react-bootstrap";
 import { BugFill, CheckCircleFill, ExclamationCircleFill, InfoCircleFill } from "react-bootstrap-icons";
 
 
@@ -136,7 +136,7 @@ const App = () => {
           }}>
             Close
           </Button>
-          {/* <Button variant="primary"></Button> */}
+    
         </Modal.Footer>
       </Modal>
       
@@ -160,9 +160,8 @@ const App = () => {
             {AppRoutes.map((v: IAppRouteNode, i: number) => {
               return <Route key={i} path={v.path} element={v.element} />;
             })}
-            
           </Route>
-          <Route path="/login" element={<Login LoginAction={login} />} />
+          <Route path="/login" element={<Login LoginAction={login} />} />     
           <Route path="/notfound" element={<NotFound />} />
           <Route path="*" element={<Navigate to="/notfound" />} />
         </Routes>
