@@ -132,14 +132,26 @@ const SipUsersForm = () => {
             />
           </Row>
           <Row>
-            <TextInputC
-              name="password"
-              label="Password"
-              type="text"
-              require={true}
-              value={state.password}
-              setState={setState}
-            />
+            
+          <Col md={6}>
+              <Form.Group className="mb-3" controlId="sipProfiles">
+                <Form.Label>SIP User Groups</Form.Label>
+                <select
+                  className={"form-select"}
+                  value={state.sipUserGroup.id}
+                  onChange={(e) => {
+                    setState({ ...state, sipUserGroup: { id: parseInt(e.target.value) } });
+                  }}>
+                  <option value={0}>Select User Group ...</option>
+                  {options.sipGroupOptions.map((opt: any) => (
+                    <option key={opt.value} value={opt.value}>
+                      {opt.label}
+                    </option>
+                  ))}
+                </select>
+              </Form.Group>
+            </Col>
+            
             <Col md={6}>
               <Form.Group className="mb-3" controlId="sipProfiles">
                 <Form.Label>SIP Profiles</Form.Label>
@@ -197,28 +209,16 @@ const SipUsersForm = () => {
             />
           </Row>
           <Row>
-
-            <Col md={6}>
-              <Form.Group className="mb-3" controlId="sipProfiles">
-                <Form.Label>SIP User Groups</Form.Label>
-                <select
-                  className={"form-select"}
-                  value={state.sipUserGroup.id}
-                  onChange={(e) => {
-                    setState({ ...state, sipUserGroup: { id: parseInt(e.target.value) } });
-                  }}>
-                  <option value={0}>Select User Group ...</option>
-                  {options.sipGroupOptions.map((opt: any) => (
-                    <option key={opt.value} value={opt.value}>
-                      {opt.label}
-                    </option>
-                  ))}
-                </select>
-              </Form.Group>
-            </Col>
-          </Row>
-          <Row>
+          <TextInputC
+              name="password"
+              label="Password"
+              type="text"
+              require={true}
+              value={state.password}
+              setState={setState}
+            />
             <TextareaC
+              rows={1}
               name="acl"
               label="Acl"
               value={state.acl}

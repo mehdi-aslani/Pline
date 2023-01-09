@@ -68,8 +68,8 @@ const Header = (props: IHeaderProps) => {
                 </NavDropdown.Item>
               </NavDropdown>
               <NavDropdown title="Call Routes">
-              <NavDropdown.Item as={Link} to="/call-routes/global-outbound/index">
-                  Global Outbound Routes
+              <NavDropdown.Item as={Link} to="/call-routes/outbound-routes/index">
+                Outbound Routes
                 </NavDropdown.Item>
                 <NavDropdown.Divider />
                 <NavDropdown.Item as={Link} to="/call-routes/specific-outbound/index">

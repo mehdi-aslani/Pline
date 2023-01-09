@@ -32,6 +32,7 @@ const TextInputC = (props: any) => {
           required={props.require}
           value={props.value}
           onChange={handleChange}
+          min={props.min}
         />
       </Form.Group>
     </Col>
@@ -42,6 +43,7 @@ TextInputC.defaultProps = {
   requir: false,
   disabled: false,
   type: "text",
+  min:null,
   md: 6
 }
 export default TextInputC

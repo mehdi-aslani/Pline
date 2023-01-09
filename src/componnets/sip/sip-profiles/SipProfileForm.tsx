@@ -42,7 +42,7 @@ const SipProfileForm = () => {
     const id = params.id;
     if (id != undefined) {
       PlineTools.getRequest("/sip-profiles/get/" + id)
-        .then((result) => {
+        .then((result:any) => {
           setState(result.data);
         })
         .catch(() => {

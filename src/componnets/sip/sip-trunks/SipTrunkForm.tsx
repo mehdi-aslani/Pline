@@ -114,6 +114,7 @@ const SipTrunkForm = () => {
                             label="Max Call"
                             value={state.maxCalls}
                             setState={setState}
+                            min={0}
                         />
                     </Row>
                     <Row>
@@ -124,7 +125,6 @@ const SipTrunkForm = () => {
                             value={state.username}
                             setState={setState}
                         />
-
                         <TextInputC
                             name="password"
                             type="password"
@@ -185,7 +185,6 @@ const SipTrunkForm = () => {
                                 </select>
                             </Form.Group>
                         </Col>
-
                         <Col md={6}>
                             <Form.Group className="mb-3" controlId="registerMode">
                                 <Form.Label>Register Mode</Form.Label>
@@ -241,12 +240,7 @@ const SipTrunkForm = () => {
                     </Button>
                     {" "}
                     <Button
-                        onClick={() => {
-                            navigate("/sip-trunks/index");
-                        }}
-                        variant="danger"
-                        type="button"
-                    >
+                        onClick={() => {navigate("/sip-trunks/index"); }} variant="danger" type="button">
                         Cancel
                     </Button>
                 </Form>

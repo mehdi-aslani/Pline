@@ -3,6 +3,8 @@ import GlobalOutbounds from "../call-routes/global-outbound/GlobalOutbounds";
 import GlobalOutboundsForm from "../call-routes/global-outbound/GlobalOutboundsForm";
 import Inbounds from "../call-routes/inbound/Inbounds";
 import InboundsForm from "../call-routes/inbound/InboundsForm";
+import OutboundRoutes from "../call-routes/outbound-routes/OutboundRoutes";
+import OutboundRoutesForm from "../call-routes/outbound-routes/OutboundRoutesForm";
 import SpecificOutbound from "../call-routes/specific-outbound/SpecificOutbound";
 import SpecificOutboundsForm from "../call-routes/specific-outbound/SpecificOutboundsForm";
 import SipGlobals from "../sip/sip-globals/SipGlobals";
@@ -39,15 +41,15 @@ export const AppRoutes = [
   { path: "/sip-suer-groups/index", element: <SipUserGroups /> },
   { path: "/sip-user-groups/create", element: <SipUserGroupsForm /> },
   { path: "/sip-user-groups/edit/:id", element: <SipUserGroupsForm /> },
-  { path: "/call-routes/global-outbound/index", element: <GlobalOutbounds /> },
-  { path: "/call-routes/global-outbound/create", element: <GlobalOutboundsForm /> },
-  { path: "/call-routes/global-outbound/edit/:id", element: <GlobalOutboundsForm /> },
-  { path: "/call-routes/inbound/index", element: <Inbounds /> },
-  { path: "/call-routes/inbound/create", element: <InboundsForm /> },
-  { path: "/call-routes/inbound/edit/:id", element: <InboundsForm /> },
-  { path: "/call-routes/specific-outbound/index", element: <SpecificOutbound /> },
-  { path: "/call-routes/specific-outbound/create", element: <SpecificOutboundsForm /> },
-  { path: "/call-routes/specific-outbound/edit/:id", element: <SpecificOutboundsForm /> },
-  { path: "/change", element: <ChangePassword /> }
+  { path: "/call-routes/outbound-routes/index", element: <OutboundRoutes /> },
+  { path: "/call-routes/outbound-routes/create", element: <OutboundRoutesForm /> },
+  { path: "/call-routes/outbound-routes/edit/:id", element: <OutboundRoutesForm /> },
+  // { path: "/call-routes/inbound/index", element: <Inbounds /> },
+  // { path: "/call-routes/inbound/create", element: <InboundsForm /> },
+  // { path: "/call-routes/inbound/edit/:id", element: <InboundsForm /> },
+  // { path: "/call-routes/specific-outbound/index", element: <SpecificOutbound /> },
+  // { path: "/call-routes/specific-outbound/create", element: <SpecificOutboundsForm /> },
+  // { path: "/call-routes/specific-outbound/edit/:id", element: <SpecificOutboundsForm /> },
+  
   
 ];
