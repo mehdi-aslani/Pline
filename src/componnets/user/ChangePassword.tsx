@@ -3,34 +3,34 @@ import { Col, Row } from 'react-bootstrap'
 import { Form } from 'react-bootstrap'
 import { Button } from 'react-bootstrap'
 import { useNavigate, useParams } from 'react-router'
-import TextInput from '../reuseables/TextInputC'
+import TextInput from '../reuseables/TextInputCustom'
 import PlineTools, { TypeAlert } from '../services/PlineTools'
 const ChangePassword = () => {
   const params = useParams();
   const navigate = useNavigate();
   const load = () => {
-      PlineTools.getRequest("/sip-profiles/get-all")
-          .then((result) => {
-              console.log(result);
-              
-          })
-          .catch((error) => {
+    PlineTools.getRequest("/sip-profiles/get-all")
+      .then((result) => {
+        console.log(result);
 
-              PlineTools.errorDialogMessage("Failed To Get Profiles");
-          })
-          .finally(() => {
-              let id = params.id;
-              if (id !== undefined) {
-                  const url = "/sip-trunks/" + id;
-                  PlineTools.getRequest(url)
-                      .then((result) => {
-                          setState(result.data);
-                      })
-                      .catch(() => {
-                          PlineTools.errorDialogMessage("Getting Data failed");
-                      });
-              }
-          });
+      })
+      .catch((error) => {
+
+        PlineTools.errorDialogMessage("Failed To Get Profiles");
+      })
+      .finally(() => {
+        let id = params.id;
+        if (id !== undefined) {
+          const url = "/sip-trunks/" + id;
+          PlineTools.getRequest(url)
+            .then((result) => {
+              setState(result.data);
+            })
+            .catch(() => {
+              PlineTools.errorDialogMessage("Getting Data failed");
+            });
+        }
+      });
   };
   const [state, setState] = useState({
     oldPasswod: "",
@@ -42,35 +42,35 @@ const ChangePassword = () => {
 
     let url = "/sip-trunks";
     if (state.oldPasswod == null) {
-        url += "/create";
+      url += "/create";
     } else {
-        url += "/update";
+      url += "/update";
     }
 
     PlineTools.postRequest(url, state)
-        .then((result) => {
-            if (result.data.hasError) {
-                PlineTools.showAlert(result.data.messages, TypeAlert.Danger);
-            } 
-        })
-        .catch((error) => {
-            PlineTools.errorDialogMessage("An error occurred while executing your request. Contact the system administrator");
-            console.log(state);
-        });
-};
-PlineTools.appAlert
-const getData = () => {
+      .then((result) => {
+        if (result.data.hasError) {
+          PlineTools.showAlert(result.data.messages, TypeAlert.Danger);
+        }
+      })
+      .catch((error) => {
+        PlineTools.errorDialogMessage("An error occurred while executing your request. Contact the system administrator");
+        console.log(state);
+      });
+  };
+  PlineTools.appAlert
+  const getData = () => {
     const id = params.id;
     if (id != undefined) {
-        PlineTools.getRequest("/sip-trunks/get/" + id)
-            .then((result) => {
-                setState(result.data);
-            })
-            .catch(() => {
-                PlineTools.errorDialogMessage("An error occurred while executing your request. Contact the system administrator");
-            });
+      PlineTools.getRequest("/sip-trunks/get/" + id)
+        .then((result) => {
+          setState(result.data);
+        })
+        .catch(() => {
+          PlineTools.errorDialogMessage("An error occurred while executing your request. Contact the system administrator");
+        });
     }
-};
+  };
 
   return (
     <form>

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Col, Form } from 'react-bootstrap';
 
-const CheckboxC = (props: any) => {
+const CheckboxCustom = (props: any) => {
 
   const handleChecked = (e: any) => {
     const value = e.target.checked;
@@ -25,7 +25,7 @@ const CheckboxC = (props: any) => {
     </Col>
   )
 }
-CheckboxC.defaultProps = {
+CheckboxCustom.defaultProps = {
   md: 6
 }
-export default CheckboxC
+export default CheckboxCustom

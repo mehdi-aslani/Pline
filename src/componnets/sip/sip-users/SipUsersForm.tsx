@@ -1,9 +1,9 @@
 import React, { useState, useEffect, FormEventHandler } from "react";
 import { Row, Col, Form, Button } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
-import CheckboxC from "../../reuseables/CheckboxC";
-import TextareaC from "../../reuseables/TextareaC";
-import TextInputC from "../../reuseables/TextInputC";
+import CheckboxCustom from "../../reuseables/CheckboxCustom";
+import TextareaCustom from "../../reuseables/TextareaCustom";
+import TextInputCustom from "../../reuseables/TextInputCustom";
 import PlineTools, { TypeAlert } from "../../services/PlineTools";
 
 const SipUsersForm = () => {
@@ -105,7 +105,7 @@ const SipUsersForm = () => {
         <hr />
         <Form onSubmit={saveData}>
           <Row>
-            <CheckboxC
+            <CheckboxCustom
               type="checkbox"
               label="Enable"
               name="enable"
@@ -114,26 +114,27 @@ const SipUsersForm = () => {
             />
           </Row>
           <Row>
-            <TextInputC
+            <TextInputCustom
               name="uid"
-              label="Uid"
+              label="User ID"
               type="text"
               require={true}
               value={state.uid}
               setState={setState}
             />
-            <TextInputC
-              label="Parallel"
-              name="parallel"
+            <TextInputCustom
+              name="password"
+              label="Password"
               type="text"
               require={true}
-              value={state.parallel}
+              value={state.password}
               setState={setState}
             />
+
           </Row>
           <Row>
-            
-          <Col md={6}>
+
+            <Col md={6}>
               <Form.Group className="mb-3" controlId="sipProfiles">
                 <Form.Label>SIP User Groups</Form.Label>
                 <select
@@ -151,7 +152,7 @@ const SipUsersForm = () => {
                 </select>
               </Form.Group>
             </Col>
-            
+
             <Col md={6}>
               <Form.Group className="mb-3" controlId="sipProfiles">
                 <Form.Label>SIP Profiles</Form.Label>
@@ -173,7 +174,7 @@ const SipUsersForm = () => {
             </Col>
           </Row>
           <Row>
-            <TextInputC
+            <TextInputCustom
               name="effectiveCallerIdName"
               label="Effective CallerId Name"
               type="text"
@@ -181,7 +182,7 @@ const SipUsersForm = () => {
               value={state.effectiveCallerIdName}
               setState={setState}
             />
-            <TextInputC
+            <TextInputCustom
               name="effectiveCallerIdNumber"
               label="Effective CallerId Number"
               type="text"
@@ -191,7 +192,7 @@ const SipUsersForm = () => {
             />
           </Row>
           <Row>
-            <TextInputC
+            <TextInputCustom
               name="outboundCallerIdName"
               label="Outbound CallerId Name"
               type="text"
@@ -199,7 +200,7 @@ const SipUsersForm = () => {
               value={state.outboundCallerIdName}
               setState={setState}
             />
-            <TextInputC
+            <TextInputCustom
               name="outboundCallerIdNumber"
               label="Outbound CallerId Number"
               type="text"
@@ -209,19 +210,18 @@ const SipUsersForm = () => {
             />
           </Row>
           <Row>
-          <TextInputC
-              name="password"
-              label="Password"
-              type="text"
-              require={true}
-              value={state.password}
-              setState={setState}
-            />
-            <TextareaC
-              rows={1}
+            <TextareaCustom
               name="acl"
               label="Acl"
               value={state.acl}
+              setState={setState}
+            />
+            <TextInputCustom
+              label="Parallel"
+              name="parallel"
+              type="text"
+              require={true}
+              value={state.parallel}
               setState={setState}
             />
           </Row>

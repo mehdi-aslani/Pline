@@ -2,9 +2,9 @@ import React, { useState, useEffect, FormEventHandler } from "react";
 import { Row, Col, Form, Button } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 import PlineTools, { TypeAlert } from "../../services/PlineTools";
-import TextareaC from "../../reuseables/TextareaC";
-import TextInputC from "../../reuseables/TextInputC";
-import CheckboxC from "../../reuseables/CheckboxC";
+import TextareaCustom from "../../reuseables/TextareaCustom";
+import TextInputCustom from "../../reuseables/TextInputCustom";
+import CheckboxCustom from "../../reuseables/CheckboxCustom";
 
 
 const SipProfileForm = () => {
@@ -12,7 +12,7 @@ const SipProfileForm = () => {
   const [state, setState] = useState({
     id: null,
     name: "",
-    enable:true,
+    enable: true,
     description: "",
   });
   const navigate = useNavigate();
@@ -42,7 +42,7 @@ const SipProfileForm = () => {
     const id = params.id;
     if (id != undefined) {
       PlineTools.getRequest("/sip-profiles/get/" + id)
-        .then((result:any) => {
+        .then((result: any) => {
           setState(result.data);
         })
         .catch(() => {
@@ -54,7 +54,7 @@ const SipProfileForm = () => {
     getData();
   }, []);
 
- 
+
   return (
     <>
       <Row>
@@ -63,7 +63,7 @@ const SipProfileForm = () => {
           <hr />
           <Form onSubmit={saveData}>
             <Row>
-              <CheckboxC 
+              <CheckboxCustom
                 label="Enable"
                 name="enable"
                 checked={state.enable}
@@ -71,12 +71,12 @@ const SipProfileForm = () => {
               />
             </Row>
             <Row>
-              <TextInputC
+              <TextInputCustom
                 name="name"
                 label="Name" require={true} value={state.name} setState={setState} />
             </Row>
             <Row>
-              <TextareaC name="description" label="Description" value={state.description} setState={setState} />
+              <TextareaCustom name="description" label="Description" value={state.description} setState={setState} />
             </Row>
             <Button variant="primary" type="submit">
               Save

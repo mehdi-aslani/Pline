@@ -3,18 +3,16 @@ import { Button, Col, Row } from "react-bootstrap";
 import { PencilSquare, Trash } from "react-bootstrap-icons";
 import { useNavigate } from "react-router-dom";
 import GridView, { IColumns, IGridViewState } from "../../grid-view/GridView";
-import ModalC from "../../modal/ModalC";
 import PlineTools, { TypeAlert } from "../../services/PlineTools";
-import SipGlobals from "../../sip/sip-globals/SipGlobals";
 import SipProfileForm from "../../sip/sip-profiles/SipProfileForm";
-import GlobalOutboundsForm from "../global-outbound/GlobalOutboundsForm";
 import SpecificOutboundsForm from "../specific-outbound/SpecificOutboundsForm";
+import ModalCustom from "../../reuseables/modal/ModalCustom";
 
 
 const OutboundRoutes = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [modaltype, setmodalType]=useState({
- });
+  const [modaltype, setmodalType] = useState({
+  });
   const [state, setState] = useState<IGridViewState>({
     content: [],
     pageable: {
@@ -46,7 +44,7 @@ const OutboundRoutes = () => {
       sort: true,
     },
     {
-      
+
       label: "Route Type",
       id: "routeType",
       value: (value: object) => {
@@ -54,15 +52,14 @@ const OutboundRoutes = () => {
           <select className={"form-select"}
             onChange={(e) => {
               let tmp = e.target.value;
-              if(tmp==="global")
-              {
+              if (tmp === "global") {
                 setModalIsOpen(true);
-                setmodalType(<SipProfileForm/>)
-              }if(tmp==="specific"){
+                setmodalType(<SipProfileForm />)
+              } if (tmp === "specific") {
                 setModalIsOpen(true);
-                setmodalType(<SpecificOutboundsForm/>)
+                setmodalType(<SpecificOutboundsForm />)
               }
-              
+
             }}
           >
             <option value={""}>Route Type</option>
@@ -162,9 +159,9 @@ const OutboundRoutes = () => {
   return (
     <div>
       <Row>
-        <ModalC show={modalIsOpen} onHide={() => setModalIsOpen(false)}>
+        <ModalCustom show={modalIsOpen} onHide={() => setModalIsOpen(false)}>
           {modaltype}
-        </ModalC>
+        </ModalCustom>
         <Col>
           <Button
             onClick={() => {

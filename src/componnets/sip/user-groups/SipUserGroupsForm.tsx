@@ -1,8 +1,8 @@
 import React, { useState, useEffect, FormEventHandler } from "react";
 import { Row, Col, Form, Button } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
-import TextareaC from "../../reuseables/TextareaC";
-import TextInputC from "../../reuseables/TextInputC";
+import TextareaCustom from "../../reuseables/TextareaCustom";
+import TextInputCustom from "../../reuseables/TextInputCustom";
 import PlineTools, { TypeAlert } from "../../services/PlineTools";
 
 const SipUserGroupsForm = () => {
@@ -22,7 +22,7 @@ const SipUserGroupsForm = () => {
     } else {
       url += "/update";
     }
-    
+
     PlineTools.postRequest(url, state)
       .then((result) => {
         if (result.data.hasError) {
@@ -53,45 +53,45 @@ const SipUserGroupsForm = () => {
   }, []);
 
   return (
-      <Row>
-        <Col md={{ span: 8, offset: 2 }}>
+    <Row>
+      <Col md={{ span: 8, offset: 2 }}>
         <h5>SIP User</h5>
-      <hr />
-      <Form onSubmit={saveData}>
-        <Row>
-          <TextInputC
-           type="text"
-           name="name"
-           label="Name"
-           value={state.name}
-           setState={setState}
-          />
-        </Row>
-        <Row>
-          <TextareaC 
-           name="description"
-           label="Description"
-           value={state.description}
-           setState={setState}
-          />
-        </Row>
-        <Button variant="primary" type="submit">
-          Save
-        </Button>{" "}
-        <Button
-          onClick={() => {
-            navigate("/sip-users/index");
-          }}
-          variant="danger"
-          type="button"
-        >
-          Cancel
-        </Button>
-      </Form> 
-        </Col>
-      </Row>
-    
-    
+        <hr />
+        <Form onSubmit={saveData}>
+          <Row>
+            <TextInputCustom
+              type="text"
+              name="name"
+              label="Name"
+              value={state.name}
+              setState={setState}
+            />
+          </Row>
+          <Row>
+            <TextareaCustom
+              name="description"
+              label="Description"
+              value={state.description}
+              setState={setState}
+            />
+          </Row>
+          <Button variant="primary" type="submit">
+            Save
+          </Button>{" "}
+          <Button
+            onClick={() => {
+              navigate("/sip-users/index");
+            }}
+            variant="danger"
+            type="button"
+          >
+            Cancel
+          </Button>
+        </Form>
+      </Col>
+    </Row>
+
+
   );
 };
 

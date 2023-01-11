@@ -2,9 +2,9 @@ import React, { useState } from 'react'
 import { Col, Form, Row } from 'react-bootstrap';
 import { Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import CheckboxC from '../../reuseables/CheckboxC';
-import TextareaC from '../../reuseables/TextareaC';
-import TextInputC from '../../reuseables/TextInputC';
+import CheckboxCustom from '../../reuseables/CheckboxCustom';
+import TextInputCustom from '../../reuseables/TextInputCustom';
+import TextareaCustom from '../../reuseables/TextareaCustom';
 
 const OutboundRoutesForm = () => {
     const navigate = useNavigate();
@@ -24,13 +24,13 @@ const OutboundRoutesForm = () => {
                 <hr />
                 <Form >
                     <Row>
-                        <CheckboxC
+                        <CheckboxCustom
                             name="enable"
                             label="Enable"
                             checked={state.enable}
                             setState={setState}
                         />
-                        <CheckboxC
+                        <CheckboxCustom
                             name="privateRoute"
                             label="Private Route"
                             checked={state.privateRoute}
@@ -38,14 +38,14 @@ const OutboundRoutesForm = () => {
                         />
                     </Row>
                     <Row>
-                        <TextInputC
+                        <TextInputCustom
                             name="name"
                             label="Name"
                             value={state.name}
                             setState={setState}
                             require={true}
                         />
-                        <TextInputC
+                        <TextInputCustom
                             name="sequential"
                             label="Sequential"
                             type="number"
@@ -55,7 +55,7 @@ const OutboundRoutesForm = () => {
                         />
                     </Row>
                     <Row>
-                        <TextareaC
+                        <TextareaCustom
                             name="description"
                             label="Description"
                             value={state.description}

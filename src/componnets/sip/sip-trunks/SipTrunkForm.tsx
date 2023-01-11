@@ -1,41 +1,13 @@
 import React, { useState, useEffect, FormEventHandler } from "react";
 import { Row, Col, Form, Button } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
-import CheckboxC from "../../reuseables/CheckboxC";
-import TextareaC from "../../reuseables/TextareaC";
-import TextInputC from "../../reuseables/TextInputC";
+import CheckboxCustom from "../../reuseables/CheckboxCustom";
+import TextareaCustom from "../../reuseables/TextareaCustom";
+import TextInputCustom from "../../reuseables/TextInputCustom";
 import PlineTools, { TypeAlert } from "../../services/PlineTools";
 
 const SipTrunkForm = () => {
     const params = useParams();
-    const load = () => {
-        if (state.registerMode === "Register") {
-            setRequire({ ...isrequire, password: true, username: true, proxy: { req: false, disabled: true }, });
-        }
-        else {
-            setRequire({ ...isrequire, password: true, username: true, proxy: { req: false, disabled: true }, });
-        }
-        PlineTools.getRequest("/sip-profiles/get-all")
-            .then((result) => {
-                setOptions(result.data);
-            })
-            .catch((error) => {
-                PlineTools.errorDialogMessage("Failed To Get Profiles");
-            })
-            .finally(() => {
-                let id = params.id;
-                if (id !== undefined) {
-                    const url = "/sip-trunks/get/" + id;
-                    PlineTools.getRequest(url)
-                        .then((result) => {
-                            setState(result.data);
-                        })
-                        .catch(() => {
-                            PlineTools.errorDialogMessage("Getting Data failed");
-                        });
-                }
-            });
-    };
     const [isrequire, setRequire] = useState({
         proxy: {
             req: false,
@@ -59,14 +31,45 @@ const SipTrunkForm = () => {
         maxCalls: 0,
         proxy: "",
         enable: false,
-        registerMode: '',
+        registerMode: "",
         description: ""
 
     });
     const navigate = useNavigate();
     const [options, setOptions] = useState([]);
+
+    const load = () => {
+
+        PlineTools.getRequest("/sip-profiles/get-all")
+            .then((result) => {
+                setOptions(result.data);
+            })
+            .catch((error) => {
+                PlineTools.errorDialogMessage("Failed To Get Profiles");
+            })
+            .finally(() => {
+                let id = params.id;
+                if (id !== undefined) {
+                    const url = "/sip-trunks/get/" + id;
+                    PlineTools.getRequest(url)
+                        .then((result) => {
+                            setState(result.data);
+                            validationSet(result.data.registerMode);
+                        })
+                        .catch(() => {
+                            PlineTools.errorDialogMessage("Getting Data failed");
+                        });
+                }
+            });
+    };
+
     const saveData = (e: any) => {
         e.preventDefault();
+        if (state.sipProfile.id == 0) {
+            PlineTools.showAlert(["SIP Profile not selected."], TypeAlert.Danger);
+            return;
+        }
+
         let url = "/sip-trunks";
         if (state.id == null) {
             url += "/create";
@@ -90,6 +93,18 @@ const SipTrunkForm = () => {
     useEffect(() => {
         load();
     }, []);
+
+    const validationSet = (register: string) => {
+        if (register == "NoRegister") {
+            setRequire({ ...isrequire, password: false, username: false, proxy: { req: true, disabled: false } });
+        } else if (register == "Register") {
+            setRequire({ ...isrequire, password: true, username: true, proxy: { req: true, disabled: false } });
+        }
+        else {
+            setRequire({ ...isrequire, password: true, username: true, proxy: { req: false, disabled: true } });
+        }
+    }
+
     return (
         <Row>
             <Col md={{ span: 8, offset: 2 }}>
@@ -97,18 +112,18 @@ const SipTrunkForm = () => {
                 <hr />
                 <Form onSubmit={saveData}>
                     <Row>
-                        <CheckboxC name="enable" label="Enable" checked={state.enable} setState={setState} />
+                        <CheckboxCustom name="enable" label="Enable" checked={state.enable} setState={setState} />
                     </Row>
 
                     <Row>
-                        <TextInputC
+                        <TextInputCustom
                             name="name"
                             label="Name"
-                            require={true}
+                            required={true}
                             value={state.name}
                             setState={setState}
                         />
-                        <TextInputC
+                        <TextInputCustom
                             type="number"
                             name="maxCalls"
                             label="Max Call"
@@ -118,50 +133,50 @@ const SipTrunkForm = () => {
                         />
                     </Row>
                     <Row>
-                        <TextInputC
+                        <TextInputCustom
                             name="username"
                             label="Username"
-                            require={isrequire.username}
+                            required={isrequire.username}
                             value={state.username}
                             setState={setState}
                         />
-                        <TextInputC
+                        <TextInputCustom
                             name="password"
                             type="password"
                             label="Password"
-                            require={isrequire.password}
+                            required={isrequire.password}
                             value={state.password}
                             setState={setState}
                         />
                     </Row>
                     <Row>
-                        <TextInputC
+                        <TextInputCustom
                             name="fromUser"
                             label="From User"
-                            require={true}
+                            required={true}
                             value={state.fromUser}
                             setState={setState}
                         />
-                        <TextInputC
+                        <TextInputCustom
                             name="fromDomain"
                             label="From Domain"
-                            require={true}
+                            required={true}
                             value={state.fromDomain}
                             setState={setState}
                         />
                     </Row>
                     <Row>
-                        <TextInputC
+                        <TextInputCustom
                             name="callerIdName"
                             label="Calller ID Name"
-                            require={true}
+                            required={true}
                             value={state.callerIdName}
                             setState={setState}
                         />
-                        <TextInputC
+                        <TextInputCustom
                             name="callerIdNumber"
                             label="Caller ID Number"
-                            require={true}
+                            required={true}
                             value={state.callerIdNumber}
                             setState={setState}
                         />
@@ -192,16 +207,10 @@ const SipTrunkForm = () => {
                                     value={state.registerMode}
                                     className={"form-select"}
                                     onChange={(e) => {
-                                        let tmp = e.target.value;
-                                        setState({ ...state, registerMode: tmp });
-                                        if (tmp === "NoRegister" || tmp === "") {
-                                            setRequire({ ...isrequire, password: false, username: false, proxy: { req: true, disabled: false } });
-                                        } else {
-                                            setRequire({ ...isrequire, password: true, username: true, proxy: { req: false, disabled: true } });
-                                        }
+                                        setState({ ...state, registerMode: e.target.value });
+                                        validationSet(e.target.value);
                                     }}
                                 >
-                                    <option value={""}>Select Register Type</option>
                                     <option value={"NoRegister"}>NoRegister</option>
                                     <option value={"Registrable"}>Registrable</option>
                                     <option value={"Register"}>Register</option>
@@ -211,36 +220,39 @@ const SipTrunkForm = () => {
                     </Row>
                     <Row>
 
-                        <TextInputC
+                        <TextInputCustom
+                            md={12}
                             name="proxy"
                             label="Proxy"
                             disabled={isrequire.proxy.disabled}
-                            require={isrequire.proxy.req}
+                            required={isrequire.proxy.req}
                             value={state.proxy}
                             setState={setState}
+                            placeholder={"hostname[:port]"}
                         />
                     </Row>
                     <Row>
-                        <TextareaC
-                            name="acl"
-                            label="Acl"
-                            require={true}
-                            value={state.acl}
-                            setState={setState}
-                        />
-                        <TextareaC
+                        <TextareaCustom
                             name="description"
                             label="Description"
                             value={state.description}
                             setState={setState}
                         />
+                        <TextareaCustom
+                            name="acl"
+                            label="Acl"
+                            required={true}
+                            value={state.acl}
+                            setState={setState}
+                        />
+
                     </Row>
                     <Button variant="primary" type="submit">
                         Save
                     </Button>
                     {" "}
                     <Button
-                        onClick={() => {navigate("/sip-trunks/index"); }} variant="danger" type="button">
+                        onClick={() => { navigate("/sip-trunks/index"); }} variant="danger" type="button">
                         Cancel
                     </Button>
                 </Form>

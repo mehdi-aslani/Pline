@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import { Col, Row } from 'react-bootstrap';
 import { Form } from 'react-bootstrap';
-import CheckboxC from '../../reuseables/CheckboxC';
-import TextInputC from '../../reuseables/TextInputC';
+import TextInputC from '../../reuseables/TextInputCustom';
+import CheckboxCustom from '../../reuseables/CheckboxCustom';
 
 const GlobalOutboundsForm = () => {
   const [state, setState] = useState({
@@ -21,9 +21,9 @@ const GlobalOutboundsForm = () => {
         <hr />
         <Form>
           <Row>
-            <CheckboxC name="enable" label="Enable" checked={state.enable} setState={setState} />
+            <CheckboxCustom name="enable" label="Enable" checked={state.enable} setState={setState} />
             <Row>
-              <CheckboxC name="privateRoute" label="Private Route" checked={state.privateRoute} setState={setState} />
+              <CheckboxCustom name="privateRoute" label="Private Route" checked={state.privateRoute} setState={setState} />
             </Row>
           </Row>
           <Row>
@@ -31,11 +31,11 @@ const GlobalOutboundsForm = () => {
               name="name"
               label="Name"
               value={state.name}
-              require={true}
+              required={true}
               type="text"
               setState={setState}
             />
-           
+
           </Row>
         </Form>
       </Col>
