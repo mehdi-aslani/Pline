@@ -12,7 +12,9 @@ const root = ReactDOM.createRoot(
 root.render(
   <Router>
     <AxiosInterceptor>
-      <App />
+      <React.StrictMode>
+        <App />
+      </React.StrictMode>
     </AxiosInterceptor>
   </Router>
 );
