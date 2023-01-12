@@ -136,37 +136,37 @@ const App = () => {
           }}>
             Close
           </Button>
-    
+
         </Modal.Footer>
       </Modal>
-      
-        <Routes>
-          <Route element={<PrivateRoute LogoutAction={logout} AlertView={alert.isShow &&
-            <Alert variant={alert.variant}>
-              {alert.messages.length == 1 &&
-                <span>{alert.messages[0]}</span>
-              }
-              {alert.messages.length > 1 &&
-                <ul>
-                  {alert.messages.map((v: string, i) => {
-                    return (<li key={i}>{v}</li>);
-                  })}
-                </ul>
-              }
-            </Alert>
-          } />}>
-            <Route path="/" element={<Home />} />
-            <Route path="/home" element={<Home />} />
-            {AppRoutes.map((v: IAppRouteNode, i: number) => {
-              return <Route key={i} path={v.path} element={v.element} />;
-            })}
-          </Route>
-          <Route path="/login" element={<Login LoginAction={login} />} />     
-          <Route path="/notfound" element={<NotFound />} />
-          <Route path="*" element={<Navigate to="/notfound" />} />
-        </Routes>
-        <Footer />
-      
+
+      <Routes>
+        <Route element={<PrivateRoute LogoutAction={logout} AlertView={alert.isShow &&
+          <Alert variant={alert.variant}>
+            {alert.messages.length == 1 &&
+              <span>{alert.messages[0]}</span>
+            }
+            {alert.messages.length > 1 &&
+              <ul>
+                {alert.messages.map((v: string, i) => {
+                  return (<li key={i}>{v}</li>);
+                })}
+              </ul>
+            }
+          </Alert>
+        } />}>
+          <Route path="/" element={<Home />} />
+          <Route path="/home" element={<Home />} />
+          {AppRoutes.map((v: IAppRouteNode, i: number) => {
+            return <Route key={i} path={v.path} element={v.element} />;
+          })}
+        </Route>
+        <Route path="/login" element={<Login LoginAction={login} />} />
+        <Route path="/notfound" element={<NotFound />} />
+        <Route path="*" element={<Navigate to="/notfound" />} />
+      </Routes>
+      <Footer />
+
     </div>
   );
 };

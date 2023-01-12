@@ -13,26 +13,26 @@ API.interceptors.request.use(function (config: any) {
     return config;
 });
 
-const AxiosInterceptor = ({ children}: any) => {
-  const navigate = useNavigate()
-  useEffect(() => {
-      const resInterceptor = (response: any) => {
-          if (response.status === 401) {
-              navigate('/login')
-          }
-          return response
-      }
-      const errInterceptor = (error: any) => {
-          return error
-      }
-      
-      const interceptor = API.interceptors.response.use(resInterceptor , errInterceptor)
+const AxiosInterceptor = ({ children }: any) => {
+    const navigate = useNavigate()
+    useEffect(() => {
+        const resInterceptor = (response: any) => {
+            if (response.status === 401) {
+                navigate('/login')
+            }
+            return response
+        }
+        const errInterceptor = (error: any) => {
+            return error
+        }
 
-      return () => API.interceptors.response.eject(interceptor)
-      
-  } , [navigate])
+        const interceptor = API.interceptors.response.use(resInterceptor, errInterceptor)
 
-  return children
+        return () => API.interceptors.response.eject(interceptor)
+
+    }, [navigate])
+
+    return children
 }
 export default API
 export { AxiosInterceptor }

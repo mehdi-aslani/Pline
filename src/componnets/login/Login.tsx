@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./Login.css";
 import "../../App.css";
-import Avatar from "./avatar_2x.png";
+import Avatar from "../../images/user.png";
 import PlineTools, { TypeMessage } from "../services/PlineTools";
 
 interface LoginProps {
@@ -32,7 +32,7 @@ function Login(props: LoginProps) {
 
   return (
     <>
-      <div className="container my-center">
+      <div className="login my-center">
         <div className="card card-container">
           <img
             id="profile-img"
@@ -43,42 +43,32 @@ function Login(props: LoginProps) {
           <p id="profile-name" className="profile-name-card"></p>
           <form onSubmit={Login} className="form-signin">
             <span id="reauth-email" className="reauth-email"></span>
-            <input
-              type="text"
-              className="form-control"
-              placeholder="Username"
-              required
-              autoFocus
-              autoComplete="off"
-              defaultValue={state.username}
-              onChange={(e) => {
-                state.username = e.target.value;
-              }}
-            />
-            <input
-              type="password"
-              className="form-control"
-              placeholder="Password"
-              required
-              autoComplete="off"
-              defaultValue={state.password}
-              onChange={(e) => {
-                state.password = e.target.value;
-              }}
-            />
-            <div id="remember" className="checkbox">
-              <label>
-                <input
-                  type="checkbox"
-                  defaultChecked={state.RememberMe}
-                  onChange={(e) => {
-                    state.RememberMe = e.target.checked;
-                  }}
-                />{" "}
-                Remember Me
-              </label>
+            <div className="form__group field">
+              <input type="input" className="form__field"
+                defaultValue={state.username}
+                autoComplete="off"
+                onChange={(e) => {
+                  state.username = e.target.value;
+                }}
+                placeholder="userName" name="name" id='name' required />
+              <label htmlFor="name" className="form__label">UserName</label>
             </div>
-            <button className="btn  btn-primary btn-block mt-2" type="submit">
+            <br />
+            {/* password */}
+
+            <div className="form__group field">
+              <input type="input" className="form__field"
+                autoComplete="off"
+                defaultValue={state.password}
+                onChange={(e) => {
+                  state.password = e.target.value;
+                }}
+                placeholder="Password" name="password" id='password' required />
+              <label htmlFor="password" className="form__label">Password</label>
+            </div>
+            {/* Remember */}
+
+            <button className="btn btn-login " type="submit">
               Login
             </button>
           </form>

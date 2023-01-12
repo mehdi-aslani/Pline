@@ -11,6 +11,17 @@ html {
   font-family: Vazir;
 }
 
+.login {
+  background-image: url('../../images/background.jpg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100vh !important;
+  width: 100% !important;
+  margin-top: 0 !important;
+  color: white;
+}
+
 .card-container.card {
   max-width: 350px;
   padding: 40px 40px;
@@ -29,11 +40,12 @@ html {
 * Card component
 */
 .card {
-  background-color: #f7f7f7;
+
   /* just in case there no content*/
   padding: 20px 25px 30px;
   margin: 0 auto 25px;
-  margin-top: 50px;
+  margin-top: 160px;
+  background-color: #373E44;
   /* shadows and rounded borders */
   -moz-border-radius: 2px;
   -webkit-border-radius: 2px;
@@ -46,11 +58,9 @@ html {
 .profile-img-card {
   width: 96px;
   height: 96px;
+  padding: 2px;
   margin: 0 auto 10px;
   display: block;
-  -moz-border-radius: 50%;
-  -webkit-border-radius: 50%;
-  border-radius: 50%;
 }
 
 /*
@@ -92,7 +102,7 @@ html {
 .form-signin button {
   width: 100%;
   display: block;
-  margin-bottom: 10px;
+  margin-top: 20px;
   z-index: 1;
   position: relative;
   -moz-box-sizing: border-box;
@@ -108,11 +118,14 @@ html {
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgb(104, 145, 162);
 }
 
-.btn.btn-signin {
+.btn-login {
   /*background-color: #4d90fe; */
-  background-color: rgb(104, 145, 162);
+  background-color: #0fbcf9 !important;
+  border-radius: 25px !important;
   /* background-color: linear-gradient(rgb(104, 145, 162), rgb(12, 97, 33));*/
   padding: 0px;
+  margin-top: 20px;
+  color: white;
   font-weight: 700;
   font-size: 14px;
   height: 36px;
@@ -126,7 +139,10 @@ html {
   transition: all 0.218s;
 }
 
-.btn.btn-signin:hover,
+.btn.btn-login:hover {
+  color: aquamarine;
+}
+
 .btn.btn-signin:active,
 .btn.btn-signin:focus {
   background-color: rgb(12, 97, 33);
@@ -142,7 +158,82 @@ html {
   color: rgb(0, 140, 255);
 }
 
+.my-center {
+  overflow-y: hidden;
+
+}
+
 .my-center input[type="text"],
 .my-center input[type="password"] {
   text-align: center;
+}
+
+.remember {
+  margin-top: 30px;
+}
+
+
+
+
+.form__group {
+  position: relative;
+  padding: 15px 0 0;
+  margin-bottom: 5px;
+  width: 50%;
+}
+
+.form__field {
+  font-family: inherit;
+  border: 0;
+  border-bottom: 2px solid #9b9b9b;
+  outline: 0;
+  width: 280px;
+  font-weight: 200;
+  font-size: 15px;
+  color: #fff;
+  padding: 7px 0;
+  background: transparent;
+  transition: border-color 0.2s;
+}
+
+.form__field::placeholder {
+  color: transparent;
+}
+
+.form__field:placeholder-shown~.form__label {
+  cursor: text;
+  top: 20px;
+}
+
+.form__label {
+  position: absolute;
+  top: 0;
+  display: block;
+  transition: 0.2s;
+  font-size: 1rem;
+  color: #9b9b9b;
+}
+
+.form__field:focus {
+  padding-bottom: 6px;
+  font-weight: 400;
+  border-width: 3px;
+  border-color: #0fbcf9;
+  border-image-slice: 1;
+}
+
+.form__field:focus~.form__label {
+  position: absolute;
+  top: 0;
+  display: block;
+  transition: 0.2s;
+  font-size: 1rem;
+  color: #0fbcf9;
+  font-weight: 400;
+}
+
+/* reset input */
+.form__field:required,
+.form__field:invalid {
+  box-shadow: none;
 }
