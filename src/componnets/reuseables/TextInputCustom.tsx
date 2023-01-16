@@ -1,7 +1,8 @@
 import React from 'react'
-import { Col, Placeholder } from 'react-bootstrap'
+import { Col, OverlayTrigger, Placeholder, Tooltip } from 'react-bootstrap'
 import { Form } from 'react-bootstrap'
-
+import * as icons from 'react-bootstrap-icons';
+import ToolTipCustom from './tooltip/ToolTipCustom';
 const TextInputCustom = (props: any) => {
   const handleChange = (e: any) => {
     const { name, value } = e.target;
@@ -24,12 +25,14 @@ const TextInputCustom = (props: any) => {
           className="mb-3"
           controlId={props.name}>
           <Form.Label>{props.label}</Form.Label>
+          <ToolTipCustom />
           <Form.Control
             name={props.name}
             disabled={props.disabled}
             type={props.type}
             required={props.required}
             value={props.value}
+
             onChange={handleChange}
             min={props.min}
             placeholder={props.placeholder}

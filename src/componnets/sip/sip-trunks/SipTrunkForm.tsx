@@ -5,8 +5,11 @@ import CheckboxCustom from "../../reuseables/CheckboxCustom";
 import TextareaCustom from "../../reuseables/TextareaCustom";
 import TextInputCustom from "../../reuseables/TextInputCustom";
 import PlineTools, { TypeAlert } from "../../services/PlineTools";
-
+import * as icons from "react-bootstrap-icons";
+import PopOver from "../../reuseables/tooltip/ToolTipCustom";
+import TooltipCustom from "../../reuseables/tooltip/ToolTipCustom";
 const SipTrunkForm = () => {
+
     const params = useParams();
     const [isrequire, setRequire] = useState({
         proxy: {
@@ -110,7 +113,7 @@ const SipTrunkForm = () => {
             <Col md={{ span: 8, offset: 2 }}>
                 <h5>SIP Trunks</h5>
                 <hr />
-                <Form onSubmit={saveData}>
+                <Form onSubmit={saveData} >
                     <Row>
                         <CheckboxCustom name="enable" label="Enable" checked={state.enable} setState={setState} />
                     </Row>
@@ -123,14 +126,25 @@ const SipTrunkForm = () => {
                             value={state.name}
                             setState={setState}
                         />
-                        <TextInputCustom
-                            type="number"
-                            name="maxCalls"
-                            label="Max Call"
-                            value={state.maxCalls}
-                            setState={setState}
-                            min={0}
-                        />
+                        <Col md={6}>
+                            <Form.Group className="mb-3" controlId="registerMode">
+                                <Form.Label>Register Mode</Form.Label>
+                                <TooltipCustom />
+                                <select
+                                    value={state.registerMode}
+                                    className={"form-select"}
+                                    onChange={(e) => {
+                                        setState({ ...state, registerMode: e.target.value });
+                                        validationSet(e.target.value);
+                                    }}
+                                >
+                                    <option value={"NoRegister"}>NoRegister</option>
+                                    <option value={"Registrable"}>Registrable</option>
+                                    <option value={"Register"}>Register</option>
+                                </select>
+                            </Form.Group>
+                        </Col>
+
                     </Row>
                     <Row>
                         <TextInputCustom
@@ -139,6 +153,7 @@ const SipTrunkForm = () => {
                             required={isrequire.username}
                             value={state.username}
                             setState={setState}
+
                         />
                         <TextInputCustom
                             name="password"
@@ -153,14 +168,14 @@ const SipTrunkForm = () => {
                         <TextInputCustom
                             name="fromUser"
                             label="From User"
-                            required={true}
+                            required={false}
                             value={state.fromUser}
                             setState={setState}
                         />
                         <TextInputCustom
                             name="fromDomain"
                             label="From Domain"
-                            required={true}
+                            required={false}
                             value={state.fromDomain}
                             setState={setState}
                         />
@@ -169,14 +184,14 @@ const SipTrunkForm = () => {
                         <TextInputCustom
                             name="callerIdName"
                             label="Calller ID Name"
-                            required={true}
+                            required={false}
                             value={state.callerIdName}
                             setState={setState}
                         />
                         <TextInputCustom
                             name="callerIdNumber"
                             label="Caller ID Number"
-                            required={true}
+                            required={false}
                             value={state.callerIdNumber}
                             setState={setState}
                         />
@@ -185,6 +200,7 @@ const SipTrunkForm = () => {
                         <Col md={6}>
                             <Form.Group className="mb-3" controlId="sipProfile">
                                 <Form.Label>SIP Profile</Form.Label>
+                                <TooltipCustom />
                                 <select
                                     className={"form-select"}
                                     value={state.sipProfile.id}
@@ -200,23 +216,14 @@ const SipTrunkForm = () => {
                                 </select>
                             </Form.Group>
                         </Col>
-                        <Col md={6}>
-                            <Form.Group className="mb-3" controlId="registerMode">
-                                <Form.Label>Register Mode</Form.Label>
-                                <select
-                                    value={state.registerMode}
-                                    className={"form-select"}
-                                    onChange={(e) => {
-                                        setState({ ...state, registerMode: e.target.value });
-                                        validationSet(e.target.value);
-                                    }}
-                                >
-                                    <option value={"NoRegister"}>NoRegister</option>
-                                    <option value={"Registrable"}>Registrable</option>
-                                    <option value={"Register"}>Register</option>
-                                </select>
-                            </Form.Group>
-                        </Col>
+                        <TextInputCustom
+                            type="number"
+                            name="maxCalls"
+                            label="Max Call"
+                            value={state.maxCalls}
+                            setState={setState}
+                            min={0}
+                        />
                     </Row>
                     <Row>
 

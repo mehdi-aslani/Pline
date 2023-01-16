@@ -1,6 +1,7 @@
 import React from 'react'
-import { Col, Form } from 'react-bootstrap'
-
+import { Col, Form, OverlayTrigger, Tooltip } from 'react-bootstrap'
+import * as icons from 'react-bootstrap-icons'
+import ToolTipCustom from './tooltip/ToolTipCustom';
 const TextareaCustom = (props: any) => {
     const handleChange = (e: any) => {
         const { name, value } = e.target;
@@ -13,6 +14,7 @@ const TextareaCustom = (props: any) => {
         <Col md={props.md}>
             <Form.Group className="mb-3">
                 <Form.Label>{props.label}</Form.Label>
+                <ToolTipCustom />
                 <Form.Control
                     name={props.name}
                     as={"textarea"}

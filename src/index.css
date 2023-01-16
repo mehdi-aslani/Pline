@@ -14,24 +14,29 @@ code {
     monospace;
 }
 
-.dropdown-menu.show{
+.dropdown-menu.show {
   margin-top: 6px !important;
-  background-color: #212529;
-  color: aliceblue;
+  background-color: #2B4865;
+  color: #FCBB6D;
   border-top-left-radius: 0;
 }
-.dropdown-menu.show{
+
+.dropdown-menu.show {
   border-radius: 0 0 2 2 !important;
 }
-.dropdown-menu.show a{
+
+.dropdown-menu.show a {
   color: aliceblue;
 }
-.dropdown-menu.show a:hover{
-  background-color:blueviolet
+
+.dropdown-menu.show a:hover {
+  background-color: #256D85;
 }
-.dropdown-divider{
+
+.dropdown-divider {
   background-color: aliceblue !important;
 }
-.Form{
+
+.Form {
   box-shadow: 5px 10px #888888;
 }

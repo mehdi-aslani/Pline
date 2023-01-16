@@ -1,8 +1,9 @@
 .header {
   margin-bottom: 20px;
 }
-.apply{
-  background-color: blueviolet;
-  color: azure;
+
+.apply {
+  background-color: #8FE3CF;
+  color: rgb(255, 255, 255);
   border-radius: 15%;
 }

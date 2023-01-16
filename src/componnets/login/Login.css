@@ -45,7 +45,7 @@ html {
   padding: 20px 25px 30px;
   margin: 0 auto 25px;
   margin-top: 160px;
-  background-color: #373E44;
+  background-color: #2B4865;
   /* shadows and rounded borders */
   -moz-border-radius: 2px;
   -webkit-border-radius: 2px;
@@ -120,7 +120,7 @@ html {
 
 .btn-login {
   /*background-color: #4d90fe; */
-  background-color: #0fbcf9 !important;
+  background-color: #8FE3CF !important;
   border-radius: 25px !important;
   /* background-color: linear-gradient(rgb(104, 145, 162), rgb(12, 97, 33));*/
   padding: 0px;
@@ -185,7 +185,7 @@ html {
 .form__field {
   font-family: inherit;
   border: 0;
-  border-bottom: 2px solid #9b9b9b;
+  border-bottom: 2px solid #256D85;
   outline: 0;
   width: 280px;
   font-weight: 200;
@@ -211,7 +211,7 @@ html {
   display: block;
   transition: 0.2s;
   font-size: 1rem;
-  color: #9b9b9b;
+  color: #8FE3CF;
 }
 
 .form__field:focus {

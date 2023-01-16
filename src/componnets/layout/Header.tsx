@@ -36,7 +36,7 @@ const Header = (props: IHeaderProps) => {
 
   return (
     <header className="header">
-      <Navbar bg="dark" variant="dark">
+      <Navbar style={{ 'backgroundColor': "#002B5B " }} variant="dark">
         <Container fluid>
           <Navbar.Brand as={Link} to="#">
             Dashboard
@@ -60,7 +60,7 @@ const Header = (props: IHeaderProps) => {
                   SIP Trunks
                 </NavDropdown.Item>
                 <NavDropdown.Divider />
-                <NavDropdown.Item as={Link} to="/sip-suer-groups/index">
+                <NavDropdown.Item as={Link} to="/sip-group-users/index">
                   Sip User Groups
                 </NavDropdown.Item>
                 <NavDropdown.Item as={Link} to="/sip-users/index">
@@ -68,8 +68,8 @@ const Header = (props: IHeaderProps) => {
                 </NavDropdown.Item>
               </NavDropdown>
               <NavDropdown title="Call Routes">
-              <NavDropdown.Item as={Link} to="/call-routes/outbound-routes/index">
-                Outbound Routes
+                <NavDropdown.Item as={Link} to="/call-routes/outbound-routes/index">
+                  Outbound Routes
                 </NavDropdown.Item>
                 <NavDropdown.Divider />
                 <NavDropdown.Item as={Link} to="/call-routes/specific-outbound/index">
@@ -80,16 +80,20 @@ const Header = (props: IHeaderProps) => {
                   InBound Routes
                 </NavDropdown.Item>
               </NavDropdown>
+              <NavDropdown title="Timing">
+                {/* add items  */}
+              </NavDropdown>
               <NavDropdown title={navDropdownTitle} id="basic-nav-dropdown">
                 <NavDropdown.Item as={Link} to="/user/change-password">
                   Change Password
                 </NavDropdown.Item>
-                <NavDropdown.Item onClick={() => {props.LogoutAction(); }}>
-                Logout
+                <NavDropdown.Item onClick={() => { props.LogoutAction(); }}>
+                  Logout
                 </NavDropdown.Item>
 
                 {/* <NavDropdown.Divider /> */}
               </NavDropdown>
+
               <Nav.Link onClick={apply} className="apply">Apply</Nav.Link>
             </Nav>
           </Navbar.Collapse>

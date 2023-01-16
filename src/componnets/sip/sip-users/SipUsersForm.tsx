@@ -5,7 +5,8 @@ import CheckboxCustom from "../../reuseables/CheckboxCustom";
 import TextareaCustom from "../../reuseables/TextareaCustom";
 import TextInputCustom from "../../reuseables/TextInputCustom";
 import PlineTools, { TypeAlert } from "../../services/PlineTools";
-
+import * as icons from 'react-bootstrap-icons';
+import ToolTipCustom from "../../reuseables/tooltip/ToolTipCustom";
 const SipUsersForm = () => {
 
   const params = useParams();
@@ -15,8 +16,8 @@ const SipUsersForm = () => {
     parallel: "",
     acl: "",
     password: "",
-    effectiveCallerIdNumber: "",
-    effectiveCallerIdName: "",
+    callerIdNumber: "",
+    callerIdName: "",
     outboundCallerIdNumber: "",
     outboundCallerIdName: "",
     sipProfile: {
@@ -33,6 +34,8 @@ const SipUsersForm = () => {
     sipGroupOptions: []
   });
   const saveData = (e: any) => {
+    console.log(state);
+
     e.preventDefault();
     let url = "/sip-users";
     if (state.id == null) {
@@ -65,10 +68,19 @@ const SipUsersForm = () => {
         });
     }
   };
+  // const getGroups = () => {
+  //   PlineTools.getRequest("/sip-users/get-profiles-group")
+  //     .then((result) => {
+  //       console.log(result.data)
+  //       // setOptions({ ...options, profileOptions: result.data.profiles });
+  //     })
+  // }
   const load = () => {
-    PlineTools.getRequest("/sip-profiles/get-all")
+    PlineTools.getRequest("/sip-users/get-profiles-group")
       .then((result) => {
-        setOptions({ ...options, profileOptions: result.data });
+
+        setOptions({ ...options, profileOptions: result.data.profiles, sipGroupOptions: result.data.sipGroups });
+
       })
       .catch((error) => {
         if (error.response.status === 422) {
@@ -106,7 +118,6 @@ const SipUsersForm = () => {
         <Form onSubmit={saveData}>
           <Row>
             <CheckboxCustom
-              type="checkbox"
               label="Enable"
               name="enable"
               checked={state.enable}
@@ -115,28 +126,46 @@ const SipUsersForm = () => {
           </Row>
           <Row>
             <TextInputCustom
+              name="callerIdName"
+              label="CallerId Name"
+              type="text"
+              require={true}
+              value={state.callerIdName}
+              setState={setState}
+            />
+            <TextInputCustom
+              name="callerIdNumber"
+              label="CallerId Number"
+              type="text"
+              require={true}
+              value={state.callerIdNumber}
+              setState={setState}
+            />
+          </Row>
+          <Row>
+            <TextInputCustom
               name="uid"
               label="User ID"
               type="text"
-              require={true}
+              requir={true}
               value={state.uid}
               setState={setState}
             />
             <TextInputCustom
-              name="password"
-              label="Password"
+              label="Parallel"
+              name="parallel"
               type="text"
               require={true}
-              value={state.password}
+              value={state.parallel}
               setState={setState}
             />
-
           </Row>
           <Row>
 
             <Col md={6}>
               <Form.Group className="mb-3" controlId="sipProfiles">
                 <Form.Label>SIP User Groups</Form.Label>
+                <ToolTipCustom />
                 <select
                   className={"form-select"}
                   value={state.sipUserGroup.id}
@@ -145,8 +174,8 @@ const SipUsersForm = () => {
                   }}>
                   <option value={0}>Select User Group ...</option>
                   {options.sipGroupOptions.map((opt: any) => (
-                    <option key={opt.value} value={opt.value}>
-                      {opt.label}
+                    <option key={opt.id} value={opt.id}>
+                      {opt.name}
                     </option>
                   ))}
                 </select>
@@ -156,7 +185,7 @@ const SipUsersForm = () => {
             <Col md={6}>
               <Form.Group className="mb-3" controlId="sipProfiles">
                 <Form.Label>SIP Profiles</Form.Label>
-
+                <ToolTipCustom />
                 <select
                   className={"form-select"}
                   value={state.sipProfile.id}
@@ -175,23 +204,13 @@ const SipUsersForm = () => {
           </Row>
           <Row>
             <TextInputCustom
-              name="effectiveCallerIdName"
-              label="Effective CallerId Name"
+              name="password"
+              label="Password"
               type="text"
               require={true}
-              value={state.effectiveCallerIdName}
+              value={state.password}
               setState={setState}
             />
-            <TextInputCustom
-              name="effectiveCallerIdNumber"
-              label="Effective CallerId Number"
-              type="text"
-              require={true}
-              value={state.effectiveCallerIdNumber}
-              setState={setState}
-            />
-          </Row>
-          <Row>
             <TextInputCustom
               name="outboundCallerIdName"
               label="Outbound CallerId Name"
@@ -200,6 +219,8 @@ const SipUsersForm = () => {
               value={state.outboundCallerIdName}
               setState={setState}
             />
+          </Row>
+          <Row>
             <TextInputCustom
               name="outboundCallerIdNumber"
               label="Outbound CallerId Number"
@@ -208,20 +229,13 @@ const SipUsersForm = () => {
               value={state.outboundCallerIdNumber}
               setState={setState}
             />
+
           </Row>
           <Row>
             <TextareaCustom
               name="acl"
               label="Acl"
               value={state.acl}
-              setState={setState}
-            />
-            <TextInputCustom
-              label="Parallel"
-              name="parallel"
-              type="text"
-              require={true}
-              value={state.parallel}
               setState={setState}
             />
           </Row>

@@ -13,10 +13,11 @@ const SipUserGroupsForm = () => {
     description: "",
   });
   const navigate = useNavigate();
+
   const saveData = (e: any) => {
     e.preventDefault();
 
-    let url = "/sip-users";
+    let url = "/sip-group-users";
     if (state.id == null) {
       url += "/create";
     } else {
@@ -28,7 +29,7 @@ const SipUserGroupsForm = () => {
         if (result.data.hasError) {
           PlineTools.showAlert(result.data.messages, TypeAlert.Danger);
         } else {
-          navigate("/sip-users/index");
+          navigate("/sip-group-users/index");
         }
       })
       .catch((error) => {
@@ -39,7 +40,7 @@ const SipUserGroupsForm = () => {
   const getData = () => {
     const id = params.id;
     if (id != undefined) {
-      PlineTools.getRequest("/sip-users/get/" + id)
+      PlineTools.getRequest("/sip-group-users/get/" + id)
         .then((result) => {
           setState(result.data);
         })
@@ -55,7 +56,7 @@ const SipUserGroupsForm = () => {
   return (
     <Row>
       <Col md={{ span: 8, offset: 2 }}>
-        <h5>SIP User</h5>
+        <h5>SIP User Group</h5>
         <hr />
         <Form onSubmit={saveData}>
           <Row>
@@ -80,11 +81,10 @@ const SipUserGroupsForm = () => {
           </Button>{" "}
           <Button
             onClick={() => {
-              navigate("/sip-users/index");
+              navigate("/sip-group-users/index");
             }}
             variant="danger"
-            type="button"
-          >
+            type="button">
             Cancel
           </Button>
         </Form>

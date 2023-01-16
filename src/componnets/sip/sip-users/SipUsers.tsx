@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Button, Col, Row } from "react-bootstrap";
-import { PencilSquare, Trash, UiChecks } from "react-bootstrap-icons";
+import { PencilSquare, Trash } from "react-bootstrap-icons";
 import { useNavigate } from "react-router-dom";
 import GridView, { IColumns, IGridViewState } from "../../grid-view/GridView";
 import PlineTools, { TypeAlert } from "../../services/PlineTools";
@@ -54,20 +54,20 @@ const SipUsers = () => {
             id: "enable",
             search: true,
             filter: [
-              {
-                label: "Enable",
-                value: "1"
-              },
-              {
-                label: "Disable",
-                value: "0"
-              }
+                {
+                    label: "Enable",
+                    value: "1"
+                },
+                {
+                    label: "Disable",
+                    value: "0"
+                }
             ],
             sort: true,
-            value: (v:any) => {
-              return v ? "Enable" : "Disable";
+            value: (v: any) => {
+                return v ? "Enable" : "Disable";
             },
-          },
+        },
         {
             label: "Edit",
             id: "id",

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Button, Col, Row } from "react-bootstrap";
-import { PencilSquare, Trash, UiChecks } from "react-bootstrap-icons";
+import { PencilSquare, Trash } from "react-bootstrap-icons";
 import { useNavigate } from "react-router-dom";
 import GridView, { IColumns, IGridViewState } from "../../grid-view/GridView";
 import PlineTools, { TypeAlert } from "../../services/PlineTools";
@@ -39,9 +39,9 @@ const SipUserGroups = () => {
         },
         {
             label: "Description",
-            id: "desc",
+            id: "description",
         },
-  
+
         {
             label: "Edit",
             id: "id",
@@ -85,7 +85,7 @@ const SipUserGroups = () => {
         }
 
         PlineTools.getRequest(
-            `/sip-user-groups/index?page=${page}&size=${size}&${searchUrl}&${sort}`)
+            `/sip-group-users/index?page=${page}&size=${size}&${searchUrl}&${sort}`)
             .then((data) => {
                 setState(data.data);
             })
@@ -99,7 +99,7 @@ const SipUserGroups = () => {
 
     const Delete = (id: string) => {
         if (window.confirm("Are you sure you want to delete this Profile?")) {
-            PlineTools.postRequest("/sip-user-groups/delete", { id: id }).then((result) => {
+            PlineTools.postRequest(`/sip-group-users/delete/${id}`, {}).then((result) => {
                 if (result.data.hasError) {
                     PlineTools.showAlert(result.data.messages, TypeAlert.Danger);
                 } else {
@@ -110,7 +110,7 @@ const SipUserGroups = () => {
     };
 
     const Edit = (id: Object) => {
-        navigate("/sip-user-groups/edit/" + id);
+        navigate("/sip-group-users/edit/" + id);
     };
 
     useEffect(() => {
@@ -133,17 +133,17 @@ const SipUserGroups = () => {
                 <Col>
                     <Button
                         onClick={() => {
-                            navigate("/sip-user-groups/create");
+                            navigate("/sip-group-users/create");
                         }}
                     >
-                        New Sip User Group
+                        New SipGroup
                     </Button>
                 </Col>
             </Row>
             <hr />
             <Row>
                 <Col>
-                    <h4>List of SIP Users Groups</h4>
+                    <h4>List of SIP Group Users</h4>
                 </Col>
             </Row>
             <Row>

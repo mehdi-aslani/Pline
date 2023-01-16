@@ -18,6 +18,7 @@ const AxiosInterceptor = ({ children }: any) => {
     useEffect(() => {
         const resInterceptor = (response: any) => {
             if (response.status === 401) {
+
                 navigate('/login')
             }
             return response
@@ -25,7 +26,6 @@ const AxiosInterceptor = ({ children }: any) => {
         const errInterceptor = (error: any) => {
             return error
         }
-
         const interceptor = API.interceptors.response.use(resInterceptor, errInterceptor)
 
         return () => API.interceptors.response.eject(interceptor)

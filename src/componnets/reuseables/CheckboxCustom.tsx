@@ -1,6 +1,7 @@
 import React from 'react'
-import { Col, Form } from 'react-bootstrap';
-
+import { Col, Form, OverlayTrigger, Tooltip } from 'react-bootstrap';
+import * as icons from 'react-bootstrap-icons'
+import ToolTipCustom from './tooltip/ToolTipCustom';
 const CheckboxCustom = (props: any) => {
 
   const handleChecked = (e: any) => {
@@ -16,7 +17,7 @@ const CheckboxCustom = (props: any) => {
       <Form.Group className="mb-3" controlId={props.name}>
         <Form.Check
           type="checkbox"
-          label={props.label}
+          label={[props.label, <ToolTipCustom />]}
           name={props.name}
           onChange={handleChecked}
           checked={props.checked}

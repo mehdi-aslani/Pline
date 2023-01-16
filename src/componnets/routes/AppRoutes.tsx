@@ -13,6 +13,7 @@ import SystemSipSettings from "../sip/system-sip-settings/SystemSipSettings";
 import SipUserGroups from "../sip/user-groups/SipUserGroups";
 import SipUserGroupsForm from "../sip/user-groups/SipUserGroupsForm";
 import SpecificOutboundsForm from "../call-routes/specific-outbound/SpecificOutboundsForm";
+import ChangePassword from "../user/ChangePassword";
 
 export interface IAppRouteNode {
   path: string;
@@ -32,11 +33,15 @@ export const AppRoutes = [
   { path: "/sip-users/index", element: <SipUsers /> },
   { path: "/sip-users/create", element: <SipUsersForm /> },
   { path: "/sip-users/edit/:id", element: <SipUsersForm /> },
-  { path: "/sip-suer-groups/index", element: <SipUserGroups /> },
-  { path: "/sip-user-groups/create", element: <SipUserGroupsForm /> },
-  { path: "/sip-user-groups/edit/:id", element: <SipUserGroupsForm /> },
+  { path: "/sip-group-users/index", element: <SipUserGroups /> },
+  { path: "/sip-group-users/create", element: <SipUserGroupsForm /> },
+  { path: "/sip-group-users/edit/:id", element: <SipUserGroupsForm /> },
   { path: "/call-routes/outbound-routes/index", element: <OutboundRoutes /> },
   { path: "/call-routes/outbound-routes/create", element: <OutboundRoutesForm /> },
   { path: "/call-routes/outbound-routes/edit/:id", element: <OutboundRoutesForm /> },
-  { path: "/call-routes/specific/create", element: <SpecificOutboundsForm /> }
+  { path: "/call-routes/specific/create", element: <SpecificOutboundsForm /> },
+  { path: "/sip-users/index", element: <SipUsers /> },
+  { path: "/sip-users/create", element: <SipUsersForm /> },
+  { path: "/sip-users/:id", element: <SipUsersForm /> },
+  { path: "/change-password", element: <ChangePassword /> }
 ];
