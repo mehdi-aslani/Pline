@@ -14,7 +14,6 @@ import SipUserGroups from "../sip/user-groups/SipUserGroups";
 import SipUserGroupsForm from "../sip/user-groups/SipUserGroupsForm";
 import SpecificOutboundsForm from "../call-routes/specific-outbound/SpecificOutboundsForm";
 import ChangePassword from "../user/ChangePassword";
-
 export interface IAppRouteNode {
   path: string;
   element: React.ReactNode;
@@ -43,5 +42,5 @@ export const AppRoutes = [
   { path: "/sip-users/index", element: <SipUsers /> },
   { path: "/sip-users/create", element: <SipUsersForm /> },
   { path: "/sip-users/:id", element: <SipUsersForm /> },
-  { path: "/change-password", element: <ChangePassword /> }
+  { path: "/change-password", element: <ChangePassword /> },
 ];

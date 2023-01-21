@@ -39,15 +39,21 @@ const SipUsers = () => {
         },
         {
             label: "SIP Profile",
-            id: "profile_name",
-            search: true,
+            id: "sipProfile",
+            search: false,
             sort: true,
+            value: (value: any) => {
+                return value.name;
+            }
         },
         {
             label: "Sip User Group",
-            id: "sip_user_group_name",
-            search: true,
+            id: "sipUserGroup",
+            search: false,
             sort: true,
+            value: (value: any) => {
+                return value.name;
+            }
         },
         {
             label: "Enable",
@@ -111,9 +117,11 @@ const SipUsers = () => {
         }
 
         PlineTools.getRequest(
-            `/sip-users/index?page=${page}&size=${size}&${searchUrl}&${sort}`)
+            `/sip-users/?page=${page}&size=${size}&${searchUrl}&${sort}`)
             .then((data) => {
+
                 setState(data.data);
+
             })
             .catch((error) => {
                 PlineTools.errorDialogMessage(
@@ -125,7 +133,7 @@ const SipUsers = () => {
 
     const Delete = (id: string) => {
         if (window.confirm("Are you sure you want to delete this Profile?")) {
-            PlineTools.postRequest("/sip-users/delete", { id: id }).then((result) => {
+            PlineTools.deleteRequest("/sip-users/", id).then((result) => {
                 if (result.data.hasError) {
                     PlineTools.showAlert(result.data.messages, TypeAlert.Danger);
                 } else {

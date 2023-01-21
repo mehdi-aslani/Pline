@@ -85,7 +85,7 @@ const SipUserGroups = () => {
         }
 
         PlineTools.getRequest(
-            `/sip-group-users/index?page=${page}&size=${size}&${searchUrl}&${sort}`)
+            `/sip-group-users/?page=${page}&size=${size}&${searchUrl}&${sort}`)
             .then((data) => {
                 setState(data.data);
             })
@@ -99,7 +99,7 @@ const SipUserGroups = () => {
 
     const Delete = (id: string) => {
         if (window.confirm("Are you sure you want to delete this Profile?")) {
-            PlineTools.postRequest(`/sip-group-users/delete/${id}`, {}).then((result) => {
+            PlineTools.deleteRequest("/sip-group-users/", id).then((result) => {
                 if (result.data.hasError) {
                     PlineTools.showAlert(result.data.messages, TypeAlert.Danger);
                 } else {

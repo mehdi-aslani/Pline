@@ -44,6 +44,39 @@ export default class PlineTools {
     return response;
   };
 
+  public static deleteRequest = (path: string, id: string,) => {
+    const requestOptions = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${PlineTools.getCookies("token") === undefined
+          ? ""
+          : PlineTools.getCookies("token")
+          }`,
+      },
+    };
+    const response = axios.delete(PlineTools.backendUrl() + path + id, requestOptions);
+    return response;
+  }
+
+  public static patchRequest = async (path: string, data: any) => {
+    const requestOptions = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${PlineTools.getCookies("token") === undefined
+          ? ""
+          : PlineTools.getCookies("token")
+          }`,
+      },
+    };
+    const response = await axios.patch(
+      PlineTools.backendUrl() + path,
+      data,
+      requestOptions
+    );
+    //const result = await response.json();
+    return response;
+
+  }
   public static postRequest = async (path: string, data: any) => {
     const requestOptions = {
       headers: {

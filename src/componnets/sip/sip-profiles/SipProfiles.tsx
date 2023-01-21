@@ -102,8 +102,9 @@ const SipProfilesList = () => {
     }
 
     PlineTools.getRequest(
-      `/sip-profiles/index?page=${page}&size=${size}&${searchUrl}&${sort}`)
+      `/sip-profiles/?page=${page}&size=${size}&${searchUrl}&${sort}`)
       .then((data) => {
+
         setState(data.data);
       })
       .catch((error) => {
@@ -116,7 +117,7 @@ const SipProfilesList = () => {
 
   const Delete = (id: string) => {
     if (window.confirm("Are you sure you want to delete this Profile?")) {
-      PlineTools.postRequest("/sip-profiles/delete", { id: id }).then((result) => {
+      PlineTools.deleteRequest("/sip-profiles/", id).then((result) => {
         if (result.data.hasError) {
           PlineTools.showAlert(result.data.messages, TypeAlert.Danger);
         } else {

@@ -21,27 +21,36 @@ const SipProfileForm = () => {
     e.preventDefault();
     let url = "/sip-profiles";
     if (state.id == null) {
-      url += "/create";
+      PlineTools.postRequest(url, state)
+        .then((result: any) => {
+          if (result.data.hasError) {
+            PlineTools.showAlert(result.data.messages, TypeAlert.Danger);
+          } else {
+            navigate("/sip-profiles/index");
+          }
+        })
+        .catch((error: any) => {
+          PlineTools.errorDialogMessage("An error occurred while executing your request. Contact the system administrator");
+        });
+
     } else {
-      url += "/update";
-    }
-    PlineTools.postRequest(url, state)
-      .then((result) => {
+      PlineTools.patchRequest(url, state).then((result: any) => {
         if (result.data.hasError) {
           PlineTools.showAlert(result.data.messages, TypeAlert.Danger);
         } else {
           navigate("/sip-profiles/index");
         }
       })
-      .catch((error) => {
-        PlineTools.errorDialogMessage("An error occurred while executing your request. Contact the system administrator");
-      });
-  };
+        .catch((error: any) => {
+          PlineTools.errorDialogMessage("An error occurred while executing your request. Contact the system administrator");
+        });
+    }
+  }
 
   const getData = () => {
     const id = params.id;
     if (id != undefined) {
-      PlineTools.getRequest("/sip-profiles/get/" + id)
+      PlineTools.getRequest("/sip-profiles/" + id)
         .then((result: any) => {
           setState(result.data);
         })

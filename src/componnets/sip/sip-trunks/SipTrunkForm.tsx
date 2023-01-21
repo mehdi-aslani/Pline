@@ -5,8 +5,6 @@ import CheckboxCustom from "../../reuseables/CheckboxCustom";
 import TextareaCustom from "../../reuseables/TextareaCustom";
 import TextInputCustom from "../../reuseables/TextInputCustom";
 import PlineTools, { TypeAlert } from "../../services/PlineTools";
-import * as icons from "react-bootstrap-icons";
-import PopOver from "../../reuseables/tooltip/ToolTipCustom";
 import TooltipCustom from "../../reuseables/tooltip/ToolTipCustom";
 const SipTrunkForm = () => {
 
@@ -53,7 +51,7 @@ const SipTrunkForm = () => {
             .finally(() => {
                 let id = params.id;
                 if (id !== undefined) {
-                    const url = "/sip-trunks/get/" + id;
+                    const url = "/sip-trunks/" + id;
                     PlineTools.getRequest(url)
                         .then((result) => {
                             setState(result.data);
@@ -75,23 +73,35 @@ const SipTrunkForm = () => {
 
         let url = "/sip-trunks";
         if (state.id == null) {
-            url += "/create";
+            PlineTools.postRequest(url, state)
+                .then((result) => {
+                    if (result.data.hasError) {
+                        PlineTools.showAlert(result.data.messages, TypeAlert.Danger);
+                    } else {
+
+                        navigate("/sip-trunks/index");
+                    }
+                })
+                .catch((error) => {
+                    PlineTools.errorDialogMessage("An error occurred while executing your request. Contact the system administrator");
+
+                });
         } else {
-            url += "/update";
+            PlineTools.patchRequest(url, state)
+                .then((result) => {
+                    if (result.data.hasError) {
+                        PlineTools.showAlert(result.data.messages, TypeAlert.Danger);
+                    } else {
+
+                        navigate("/sip-trunks/index");
+                    }
+                })
+                .catch((error) => {
+                    PlineTools.errorDialogMessage("An error occurred while executing your request. Contact the system administrator");
+
+                });
         }
-        PlineTools.postRequest(url, state)
-            .then((result) => {
-                if (result.data.hasError) {
-                    PlineTools.showAlert(result.data.messages, TypeAlert.Danger);
-                } else {
-                    console.log(state);
-                    navigate("/sip-trunks/index");
-                }
-            })
-            .catch((error) => {
-                PlineTools.errorDialogMessage("An error occurred while executing your request. Contact the system administrator");
-                console.log(state);
-            });
+
     };
     useEffect(() => {
         load();

@@ -58,8 +58,6 @@ const SipProfileDetails = () => {
             data = JSON.parse(data);
           } catch { }
 
-          console.log(data, typeof data);
-
           if (Array.isArray(data)) {
             select = [];
             data.forEach((e) => {

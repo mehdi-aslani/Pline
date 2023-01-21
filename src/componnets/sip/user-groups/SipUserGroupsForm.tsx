@@ -19,28 +19,39 @@ const SipUserGroupsForm = () => {
 
     let url = "/sip-group-users";
     if (state.id == null) {
-      url += "/create";
-    } else {
-      url += "/update";
-    }
+      PlineTools.postRequest(url, state)
+        .then((result: any) => {
+          if (result.data.hasError) {
+            PlineTools.showAlert(result.data.messages, TypeAlert.Danger);
+          } else {
+            navigate("/sip-group-users/index");
+          }
+        })
+        .catch((error: any) => {
+          PlineTools.errorDialogMessage("An error occurred while executing your request. Contact the system administrator");
+        });
 
-    PlineTools.postRequest(url, state)
-      .then((result) => {
-        if (result.data.hasError) {
-          PlineTools.showAlert(result.data.messages, TypeAlert.Danger);
-        } else {
-          navigate("/sip-group-users/index");
-        }
-      })
-      .catch((error) => {
-        PlineTools.errorDialogMessage("An error occurred while executing your request. Contact the system administrator");
-      });
-  };
+    } else {
+      PlineTools.patchRequest(url, state)
+        .then((result: any) => {
+          if (result.data.hasError) {
+            PlineTools.showAlert(result.data.messages, TypeAlert.Danger);
+          } else {
+            navigate("/sip-group-users/index");
+          }
+        })
+        .catch((error: any) => {
+          PlineTools.errorDialogMessage("An error occurred while executing your request. Contact the system administrator");
+        });
+    };
+  }
+
+
 
   const getData = () => {
     const id = params.id;
     if (id != undefined) {
-      PlineTools.getRequest("/sip-group-users/get/" + id)
+      PlineTools.getRequest("/sip-group-users/" + id)
         .then((result) => {
           setState(result.data);
         })

@@ -1,6 +1,5 @@
 import React from 'react'
-import { Col, Form, OverlayTrigger, Tooltip } from 'react-bootstrap';
-import * as icons from 'react-bootstrap-icons'
+import { Col, Form } from 'react-bootstrap';
 import ToolTipCustom from './tooltip/ToolTipCustom';
 const CheckboxCustom = (props: any) => {
 

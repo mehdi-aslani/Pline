@@ -35,7 +35,6 @@ const GlobalOutboundsForm = () => {
               type="text"
               setState={setState}
             />
-
           </Row>
         </Form>
       </Col>

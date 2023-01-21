@@ -81,7 +81,7 @@ const SipTrunks = () => {
     }
 
     PlineTools.getRequest(
-      `/sip-trunks/index?page=${page}&size=${size}&${searchUrl}&${sort}`)
+      `/sip-trunks/?page=${page}&size=${size}&${searchUrl}&${sort}`)
       .then((data) => {
         setState(data.data);
       })
@@ -95,7 +95,7 @@ const SipTrunks = () => {
 
   const Delete = (id: string) => {
     if (window.confirm("Are you sure you want to delete this Profile?")) {
-      PlineTools.postRequest("/sip-trunks/delete", { id: id }).then((result) => {
+      PlineTools.deleteRequest("/sip-trunks/", id).then((result) => {
         if (result.data.hasError) {
           PlineTools.showAlert(result.data.messages, TypeAlert.Danger);
         } else {
