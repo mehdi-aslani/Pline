@@ -58,7 +58,7 @@ const AddGroupUsersForm = () => {
                             required={true}
                             name="users-range"
                             label="Users Range"
-                            placeholder="Example 1000-1020"
+                            placeholder="Example 100-120,125,127,300-310,400,402"
                             value={state.range}
                             onChange={setState}
                         />
