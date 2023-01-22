@@ -63,6 +63,9 @@ const Header = (props: IHeaderProps) => {
                 <NavDropdown.Item as={Link} to="/sip-group-users/index">
                   Sip User Groups
                 </NavDropdown.Item>
+                <NavDropdown.Item as={Link} to="/add-group-users/index">
+                  Add Users Group
+                </NavDropdown.Item>
                 <NavDropdown.Item as={Link} to="/sip-users/index">
                   Sip Users
                 </NavDropdown.Item>

@@ -199,14 +199,14 @@ const GridView = (props: IGridView) => {
           <Pagination>
             <Pagination.Item
               onClick={() => {
-                props.Events.first;
+                props.Events.first();
               }}
             >
               {"Next Page"}
             </Pagination.Item>
             <Pagination.Item
               onClick={() => {
-                props.Events.pre;
+                props.Events.pre();
               }}
             >
               {"Previous Page"}
@@ -217,14 +217,14 @@ const GridView = (props: IGridView) => {
             </Pagination.Item>
             <Pagination.Item
               onClick={() => {
-                props.Events.next;
+                props.Events.next();
               }}
             >
               {"Next Page"}
             </Pagination.Item>
             <Pagination.Item
               onClick={() => {
-                props.Events.last;
+                props.Events.last();
               }}
             >
               {"Last Page"}
