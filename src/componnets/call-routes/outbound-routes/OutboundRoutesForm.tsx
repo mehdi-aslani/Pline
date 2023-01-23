@@ -1,10 +1,11 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Col, Form, Row } from 'react-bootstrap';
 import { Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import CheckboxCustom from '../../reuseables/CheckboxCustom';
 import TextInputCustom from '../../reuseables/TextInputCustom';
 import TextareaCustom from '../../reuseables/TextareaCustom';
+import PlineTools from '../../services/PlineTools';
 
 const OutboundRoutesForm = () => {
     const navigate = useNavigate();
@@ -14,8 +15,10 @@ const OutboundRoutesForm = () => {
         name: "",
         sequential: 0,
         description: ""
-
     });
+    useEffect(() => {
+        console.log(PlineTools.getCookies('token'));
+    }, [])
     return (
         <Row>
             <Col md={{ span: 8, offset: 2 }}>
