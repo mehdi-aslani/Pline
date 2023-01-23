@@ -1,33 +1,43 @@
-import React, { useState } from "react";
 import "./Login.css";
 import "../../App.css";
 import Avatar from "../../images/user.png";
 import PlineTools, { TypeMessage } from "../services/PlineTools";
-
+import React, { useCallback, useRef, useState } from 'react';
+import Captcha from 'react-captcha-code';
 interface LoginProps {
   LoginAction: Function;
 }
 
 function Login(props: LoginProps) {
+  const handleChange = useCallback((captcha: any) => {
+    setCapth({ ...captch, image: captcha })
+  }, []);
 
   const [state] = useState({
     username: "",
     password: "",
     RememberMe: false,
   });
-
+  const [captch, setCapth] = useState({
+    input: "",
+    image: ""
+  });
   const Login = (e: any) => {
     e.preventDefault();
-    PlineTools.postRequest("/users/login", state).then((result) => {
-      if (result.data.hasError == false) {
-        // PlineTools.dialogMessage("Login Successfully");
-        props.LoginAction(result.data);
-      } else {
-        result.data.messages.forEach((v: string) => {
-          PlineTools.dialogMessage(v, "Error", TypeMessage.ERROR);
-        });
-      }
-    });
+    if (captch.image === captch.input) {
+      PlineTools.postRequest("/users/login", state).then((result) => {
+        if (result.data.hasError == false) {
+          // PlineTools.dialogMessage("Login Successfully");
+          props.LoginAction(result.data);
+        } else {
+          result.data.messages.forEach((v: string) => {
+            PlineTools.dialogMessage(v, "Error", TypeMessage.ERROR);
+          });
+        }
+      });
+    } else {
+      PlineTools.dialogMessage('Wrong Captcha ,Try Again...better to Refreh', 'Captcha Error')
+    }
   };
 
   return (
@@ -55,7 +65,6 @@ function Login(props: LoginProps) {
             </div>
             <br />
             {/* password */}
-
             <div className="form__group field">
               <input type="input" className="form__field"
                 autoComplete="off"
@@ -65,6 +74,17 @@ function Login(props: LoginProps) {
                 }}
                 placeholder="Password" name="password" id='password' required />
               <label htmlFor="password" className="form__label">Password</label>
+            </div>
+            <div className="form__group field">
+              <Captcha className="capt" height={60} bgColor="#F2E9E7" width={280} fontSize={30} charNum={8} onChange={handleChange} />
+            </div>
+            <div className="form__group field">
+              <input autoCapitalize="false" className="form__field"
+                name="captcha" id='captcha' placeholder="Captcha" required
+                onChange={(e) => {
+                  setCapth({ ...captch, input: e.target.value });
+                }} />
+              <label className="form__label">Captcha</label>
             </div>
             {/* Remember */}
 

@@ -12,7 +12,6 @@ const OutboundRoutesForm = () => {
         id: null,
         enable: false,
         name: "",
-        privateRoute: false,
         sequential: 0,
         description: ""
 
@@ -30,12 +29,6 @@ const OutboundRoutesForm = () => {
                             checked={state.enable}
                             setState={setState}
                         />
-                        <CheckboxCustom
-                            name="privateRoute"
-                            label="Private Route"
-                            checked={state.privateRoute}
-                            setState={setState}
-                        />
                     </Row>
                     <Row>
                         <TextInputCustom
@@ -45,6 +38,7 @@ const OutboundRoutesForm = () => {
                             setState={setState}
                             require={true}
                         />
+
                         <TextInputCustom
                             name="sequential"
                             label="Sequential"

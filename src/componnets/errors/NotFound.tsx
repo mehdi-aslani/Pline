@@ -9,15 +9,15 @@ const NotFound = () => {
     <Row>
       <Col md={12}>
         <div className="error-template">
-          <h1 className="ops">Oops!</h1>
-          <h2>Error 404</h2>
+          <h1 style={{ color: "red" }} className="ops">Oops!</h1>
+          <h2 style={{ color: "red" }}>Error 404</h2>
           <div className="error-details">
             Your requested page could not be found. Please contact the system
             administrator
           </div>
           <div className="error-actions">
             <Link to={"/"}>
-              <Button>
+              <Button >
                 <HouseDoor /> Return to Home page
               </Button>
             </Link>

@@ -37,29 +37,30 @@ const SipUsersForm = () => {
     e.preventDefault();
     let url = "/sip-users";
     if (state.id == null) {
+      console.log(state);
       PlineTools.postRequest(url, state)
-      .then((result:any) => {
-        if (result.data.hasError) {
-          PlineTools.showAlert(result.data.messages, TypeAlert.Danger);
-        } else {
-          navigate("/sip-users/index");
-        }
-      })
-      .catch((error:any) => {
-        PlineTools.errorDialogMessage("An error occurred while executing your request. Contact the system administrator");
-      });
-  
+        .then((result: any) => {
+          if (result.data.hasError) {
+            PlineTools.showAlert(result.data.messages, TypeAlert.Danger);
+          } else {
+            navigate("/sip-users/index");
+          }
+        })
+        .catch((error: any) => {
+          PlineTools.errorDialogMessage("An error occurred while executing your request. Contact the system administrator");
+        });
+
     } else {
-      PlineTools.patchRequest(url,state).then((result:any) => {
+      PlineTools.patchRequest(url, state).then((result: any) => {
         if (result.data.hasError) {
           PlineTools.showAlert(result.data.messages, TypeAlert.Danger);
         } else {
           navigate("/sip-users/index");
         }
       })
-      .catch((error:any) => {
-        PlineTools.errorDialogMessage("An error occurred while executing your request. Contact the system administrator");
-      });
+        .catch((error: any) => {
+          PlineTools.errorDialogMessage("An error occurred while executing your request. Contact the system administrator");
+        });
     }
 
   }
