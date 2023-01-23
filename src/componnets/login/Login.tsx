@@ -80,7 +80,7 @@ function Login(props: LoginProps) {
               <label htmlFor="password" className="form__label">Password</label>
             </div>
             <div className="form__group field">
-              <Captcha height={60} bgColor="#F2E9E7" width={280} fontSize={30} charNum={6} onChange={handleChange} />
+              <Captcha height={60} bgColor="#133913" width={280} fontSize={30} charNum={6} onChange={handleChange} />
             </div>
             <div className="form__group field">
               <input autoCapitalize="false" className="form__field"

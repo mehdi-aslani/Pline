@@ -64,7 +64,7 @@ const AddGroupUsersForm = () => {
                         />
                         <Col md={6}>
                             <Form.Group className="mb-3" controlId="registerMode">
-                                <Form.Label>Register Mode</Form.Label>
+                                <Form.Label>Password</Form.Label>
                                 <ToolTipCustom />
                                 <select
                                     value={state.passwordType}
@@ -72,9 +72,9 @@ const AddGroupUsersForm = () => {
                                         setState({ ...state, passwordType: e.target.value })
                                     }
                                     className={"form-select"}>
-                                    <option value={"noPassword"}>NoPassword</option>
-                                    <option value={"random"}>Random</option>
-                                    <option value={"userName"}>UserName as Password</option>
+                                    <option value={"same"}>Same as Username Password</option>
+                                    <option value={"random"}>Random Password</option>
+                                    <option value={"noPassword"}>No Password</option>
                                 </select>
                             </Form.Group>
                         </Col>

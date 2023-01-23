@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Button, Col, Row } from "react-bootstrap";
+import { Button, Col, Dropdown, Row } from "react-bootstrap";
 import { PencilSquare, Trash } from "react-bootstrap-icons";
 import { useNavigate } from "react-router-dom";
 import GridView, { IColumns, IGridViewState } from "../../grid-view/GridView";
@@ -166,13 +166,22 @@ const SipUsers = () => {
         <div>
             <Row>
                 <Col>
-                    <Button
-                        onClick={() => {
-                            navigate("/sip-users/create");
-                        }}
-                    >
-                        New Sip User
-                    </Button>
+
+                    <Dropdown>
+                        <Dropdown.Toggle variant={"primary"} id="add-sip-user">
+                            Actions
+                        </Dropdown.Toggle>
+
+                        <Dropdown.Menu>
+                            <Dropdown.Item onClick={() => {
+                                navigate("/sip-users/create");
+                            }}>New SIP User</Dropdown.Item>
+                            <Dropdown.Item href="#/action-2">Add Bulk SIP Users</Dropdown.Item>
+                            <Dropdown.Item href="#/action-3">Edit Selected Items</Dropdown.Item>
+                            <Dropdown.Item href="#/action-3">Delete Selected Items</Dropdown.Item>
+                        </Dropdown.Menu>
+                    </Dropdown>
+
                 </Col>
             </Row>
             <hr />
